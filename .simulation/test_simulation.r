@@ -1,4 +1,4 @@
-devtools::install_github("https://github.com/sooyongl/trySimulation")
+# devtools::install_github("https://github.com/sooyongl/trySimulation")
 
 library(trySimulation)
 
@@ -11,9 +11,8 @@ bias_res <- getBias(sim_result)
 
 saveRDS(power_res, file = ".simulation/power_res.rds")
 
-
 save(power_res, bias_res, file = ".simulation/results.rdata")
 
-p1 <- makePlot(bias_res, what = "RMSE", font_size = 12)
+makePlot(bias_res, what = "RMSE", font_size = 12)
 makePlot(power_res, what = "power", font_size = 12)
 makePlot(power_res, what = "typeIerror", font_size = 12)
