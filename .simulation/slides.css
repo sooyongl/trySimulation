@@ -1,0 +1,48 @@
+/* Pretty print */
+
+/* line 600, ../scss/default.scss */
+.prettyprint .com {
+  /* a comment */
+  color: green;
+  font-style: italic;
+}
+
+/* line 604, ../scss/default.scss */
+.prettyprint .lit {
+  /* a literal value */
+  color: black;
+}
+
+/* line 609, ../scss/default.scss */
+.prettyprint .pun,
+.prettyprint .opn,
+.prettyprint .clo {
+  color: red;
+}
+
+/* line 618, ../scss/default.scss */
+.prettyprint .pln {
+  color: blue;
+}
+
+pre {
+  font-family: 'Source Code Pro', 'Courier New', monospace;
+  font-size: 20px;
+  color: pink;
+  line-height: 28px;
+  padding: 10px 0 10px 60px;
+  letter-spacing: -1px;
+  margin-bottom: 20px;
+  width: 106%;
+  left: -60px;
+  position: relative;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  /*overflow: hidden;*/
+}
+
+slides > slide {
+  overflow-x: auto !important;
+  overflow-y: auto !important;
+}
