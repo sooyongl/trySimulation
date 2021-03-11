@@ -115,6 +115,7 @@ getEst <- function(.fit) {
     dplyr::select(type, est, pvalue)
 }
 
+# getEst(.fit)
 
 #' run simulation
 #' @export
