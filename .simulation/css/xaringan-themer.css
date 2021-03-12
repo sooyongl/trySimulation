@@ -16,38 +16,72 @@
  *    - remarkjs wiki: https://github.com/gnab/remark/wiki
  *
  * ------------------------------------------------------- */
+/* font imported */
 @import url(https://fonts.googleapis.com/css?family=Roboto+Condensed);
 @import url(https://fonts.googleapis.com/css?family=Roboto:700);
-@import url(https://fonts.googleapis.com/css?family=Droid+Mono);
 
-
-body {
-  font-family: Roboto Condensed, 'Palatino Linotype', 'Book Antiqua', Palatino, 'Microsoft YaHei', 'Songti SC', serif;
-  font-weight: ;
-  color: #272822;
+/* title page */
+.title-slide, .title-slide h1, .title-slide h2, .title-slide h3 {
+  color: #000000;
 }
+
+.title-slide h1 {
+	font-size: 2em;
+	padding-top: 2em;
+	padding-bottom: 4em;
+}
+
+.title-slide h2 {
+	font-size: 1em;
+	padding-bottom: 4em;
+}
+
+.title-slide body {
+	font-size: 10pt;
+}
+
+.title-slide {
+  background-color: #E6E3E2
+}
+.title-slide .remark-slide-number {
+  display: none;
+}
+
+/*contents*/
+.contents h1, h2, h3 {
+  font-family: Roboto;
+  font-weight: bold;
+  color: #000000;
+  margin-bottom: 1em;
+}
+
+.contents li {
+	font-size: 1em;
+	margin-top: 1em;
+	padding: 10;
+}
+
+/*main*/
 h1, h2, h3 {
   font-family: Roboto;
   font-weight: normal;
-  color: #09017F;
+  color: #000000;
+  margin: 0;
 }
-.remark-slide-content {
-  background-color: #FFFFFF;
-  font-size: 20px;
-  
-  
-  
-  padding: 1em 4em 1em 4em;
+
+h1 {
+  font-size: 10px;
+  margin-bottom: 1em;
 }
-.remark-slide-content h1 {
-    font-size: 55px;
+
+body {
+  font-family: Roboto Condensed;
+  font-weight: normal;
+  color: #000000;
 }
-.remark-slide-content h2 {
-    font-size: 45px;
-}
-.remark-slide-content h3 {
-    font-size: 35px;
-}
+
+
+/*code chunk*/
 .remark-code, .remark-inline-code {
   font-family: Droid Mono, 'Lucida Console', Monaco, monospace;
 }
@@ -57,9 +91,9 @@ h1, h2, h3 {
 .remark-inline-code {
   font-size: 1em;
   color: #09017F;
-  
-  
 }
+
+
 .remark-slide-number {
   color: #09017F;
   opacity: 1;
@@ -88,18 +122,7 @@ a, a > code {
 .inverse h1, .inverse h2, .inverse h3 {
   color: #000000
 }
-.title-slide, .title-slide h1, .title-slide h2, .title-slide h3 {
-  color: #000000;
-}
-.title-slide {
-  background-color: #E6E3E2
-  
-  
-  
-}
-.title-slide .remark-slide-number {
-  display: none;
-}
+
 /* Two-column layout */
 .left-column {
   width: 20%;
@@ -173,3 +196,28 @@ table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
     left: 0 !important;
   }
 }
+
+slides > slide {
+  overflow-x: scroll !important;
+  overflow-y: scroll !important;
+}
+
+
+/* additional aesthetic
+.remark-slide-content {
+  background-color: #FFFFFF;
+  font-size: 20px;
+  padding: 1em 4em 1em 4em;
+}
+.remark-slide-content h1 {
+    font-size: 55px;
+}
+.remark-slide-content h2 {
+    font-size: 45px;
+}
+.remark-slide-content h3 {
+    font-size: 35px;
+}
+
+
+*/

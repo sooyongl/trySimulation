@@ -2,7 +2,7 @@
 title: "R로 package 만들어서 Simulation 하기"
 output: 
   ioslides_presentation:
-    css: slides.css
+    css: css/slides.css
     widescreen: true
     transition: faster
 ---
