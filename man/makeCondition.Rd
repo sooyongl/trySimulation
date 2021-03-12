@@ -2,10 +2,27 @@
 % Please edit documentation in R/source.r
 \name{makeCondition}
 \alias{makeCondition}
-\title{generation condition}
+\title{Generation a condition table}
 \usage{
 makeCondition(n_sample, cov_size, n_indi, cut_size, n_rep, full = T)
 }
+\arguments{
+\item{n_sample}{a integer vector indicating total sample sizes.}
+
+\item{cov_size}{a double vector indicating the size of latent covariance.}
+
+\item{n_indi}{a integer vector indicating the number of indicators each latent factor.}
+
+\item{n_rep}{a integer scalar for the number of replication}
+
+\item{full}{a logical scalar. If \code{full} = TRUE, \code{makeCondition} returns a condition list including the replication numbers.}
+}
+\value{
+a data frame containing the conditions.
+}
 \description{
-generation condition
+\code{\link{makeCondition}} returns a condition table
+}
+\examples{
+makeCondition(n_sample = c(500), cov_size = c(0, 0.5), n_indi = c(3, 6), cut_size = c(5,7), full = F)
 }

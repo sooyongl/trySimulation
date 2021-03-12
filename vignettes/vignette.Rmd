@@ -1,0 +1,27 @@
+---
+title: "trySimulation"
+author: "Sooyong Lee"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+# usethis::use_vignette("vignette")
+```
+
+```{r setup}
+library(trySimulation)
+```
+
+# Introduction
+
+## Functions

@@ -1,0 +1,99 @@
+---
+title: "R로 package 만들어서 Simulation 하기"
+author: "Sooyong Lee<br><span style = 'font-size: 50%;'>The University of Texas at Austin<br>Educational Psychology</span>"
+date: "`r Sys.Date()`"
+output: 
+  xaringan::moon_reader:
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      seal: false
+      ratio: "16:9"
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T, fig.width=8, fig.height=6, fig.retina = 3, warning = FALSE, message = FALSE)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(psych)
+library(trySimulation)
+library(glue)
+
+# https://arm.rbind.io/slides/xaringan.html#120
+
+root <- rprojroot::find_rstudio_root_file()
+report_path <- file.path(root, ".simulation")
+
+load(file.path(report_path, "results.rdata"))
+```
+
+--- 
+# Introduce yourself!
+
+> My name is Alison and I am a Data Scientist & Professional Educator at RStudio. I live in Portland, Oregon with my husband, daughter, and our sourdough starter.
+
+---
+
+# Find me at...
+All the details...
+
+---
+class: center, middle
+
+
+# Slide with centered content in the middle
+My name is Alison. I like hot toddies, `#rdogladies`, and babies.
+
+hori:
+- left,
+- center, 
+- right
+
+verti:
+- top, 
+- middle, 
+- bottom
+
+---
+class: center, middle 
+# Slide with some aligned text
+My name is Alison. I like hot toddies, `#rdogladies`,...
+.left[and babies.]
+---
+
+
+.pull-left[
+...
+![a1](http://bit.ly/momtocat)
+]
+.pull-right[
+...
+![a1](http://bit.ly/momtocat)
+]
+
+---
+
+# Hi there
+My name is Alison
+--
+I like hot toddies
+--
+`#rdogladies`
+--
+and babies
+
+---
+
+.pull-left[
+```{r plot-last, fig.show = 'hide'}
+plot(c(1:10))
+```
+]
+.pull-right[
+```{r ref.label = 'plot-last', echo = FALSE}
+```
+]
+
+
+---
