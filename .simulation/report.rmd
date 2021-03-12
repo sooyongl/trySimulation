@@ -41,7 +41,7 @@ load(file.path(report_path, "results.rdata"))
 
 ## Method
 
-$$\Sigma =  \Lambda^T \Phi \Lambda + \Psi$$
+$$\Sigma =  \Lambda \Phi \Lambda^T + \Psi$$
 
 ```{r}
 makeCondition(n_sample = c(100, 500), cov_size = c(0, 0.5), n_indi = c(3, 6), cut_size = c(3,5,7), n_rep = 5, full = F) %>% 
