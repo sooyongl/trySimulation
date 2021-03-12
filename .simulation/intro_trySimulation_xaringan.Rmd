@@ -1,15 +1,13 @@
 ---
-title: "R로 package 만들어서 Simulation 하기"
-author: "Sooyong Lee<br><span style = 'font-size: 50%;'>The University of Texas at Austin<br>Educational Psychology</span>"
-date: "`r Sys.Date()`"
 output: 
   xaringan::moon_reader:
+    css: ["default", "css/xaringan-themer.css"]
     nature:
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
-      seal: false
-      ratio: "16:9"
+      ratio: "3:2"
+    seal: false  
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = T, fig.width=8, fig.height=6, fig.retina = 3, warning = FALSE, message = FALSE)
@@ -19,6 +17,9 @@ library(kableExtra)
 library(psych)
 library(trySimulation)
 library(glue)
+# library(xaringan)
+
+# theme_set(theme_roboto())
 
 # https://arm.rbind.io/slides/xaringan.html#120
 
@@ -28,10 +29,19 @@ report_path <- file.path(root, ".simulation")
 load(file.path(report_path, "results.rdata"))
 ```
 
---- 
-# Introduce yourself!
+class: center, middle, title-slide
 
-> My name is Alison and I am a Data Scientist & Professional Educator at RStudio. I live in Portland, Oregon with my husband, daughter, and our sourdough starter.
+<span style = 'font-size: 200%;'>R로 package 만들어서 Simulation</span>
+
+<br>
+<br>
+
+`r Sys.Date()`
+
+<br>
+<br>
+
+Sooyong Lee<br><br><span style = 'font-size: 100%;'>Educational Psychology<br><br>The University of Texas at Austin</span>
 
 ---
 
