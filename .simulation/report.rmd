@@ -43,6 +43,23 @@ load(file.path(report_path, "results.rdata"))
 
 $$\Sigma =  \Lambda \Phi \Lambda^T + \Psi$$
 
+$$\Sigma =  \Lambda \Phi \Lambda^T + \Psi$$
+$$
+\begin{aligned}
+\Sigma &= \left(\begin{array}{cc} 
+\Sigma_{yy} & sym\\
+\Sigma_{xy} & \Sigma_{xx}
+\end{array}\right) \\
+&= \left(\begin{array}{cc} 
+\Lambda_y(I-B)^{-1}(\Gamma\Phi\Gamma^{\\'}+\Psi)(I-B)^{\\'-1}\Lambda_y + \Theta_\epsilon & \Lambda_y(I-B)^{-1}\Gamma\Phi\Lambda^{\\'}\\
+\Lambda_x\Phi\Gamma^{\\'}(I-B)^{-1}\Lambda^{\\'}_y &
+\Lambda_x\Phi\Lambda^{\\'}_x+\Theta_\delta
+\end{array}\right)
+\end{aligned}
+$$ 
+
+
+
 ```{r}
 makeCondition(n_sample = c(100, 500), cov_size = c(0, 0.5), n_indi = c(3, 6), cut_size = c(3,5,7), n_rep = 5, full = F) %>% 
  kable(., format="markdown", digits=4) 
