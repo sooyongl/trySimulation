@@ -41,9 +41,8 @@ load(file.path(report_path, "results.rdata"))
 
 ## Method
 
-$$\Sigma =  \Lambda \Phi \Lambda^T + \Psi$$
+$$\Sigma =  \Lambda \Phi \Lambda^{\\'} + \Psi$$
 
-$$\Sigma =  \Lambda \Phi \Lambda^T + \Psi$$
 $$
 \begin{aligned}
 \Sigma &= \left(\begin{array}{cc} 

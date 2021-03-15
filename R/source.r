@@ -76,6 +76,7 @@ ggenData <- function(
       1.0, 1.0,
       1.0, 2.0,
       1.0, 3.0), nrow = 4, byrow = T),
+
   I1 =
     matrix(c(1,0,
              0,1), nrow = 2),
