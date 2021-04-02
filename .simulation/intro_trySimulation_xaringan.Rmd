@@ -1,6 +1,7 @@
 ---
 output: 
   xaringan::moon_reader:
+    yolo: true
     css: ["default", "css/xaringan-themer.css"]
     nature:
       highlightStyle: github
@@ -17,8 +18,10 @@ library(kableExtra)
 library(psych)
 library(trySimulation)
 library(glue)
-# library(xaringan)
+library(xaringan)
+library(flipbookr)
 
+ # xaringan::inf_mr()
 # theme_set(theme_roboto())
 
 # hori:
@@ -39,6 +42,13 @@ report_path <- file.path(root, ".simulation")
 load(file.path(report_path, "results.rdata"))
 ```
 
+```{r xaringa-theme, include = F}
+library(xaringanthemer)
+# style_mono_light(base_color = "#23395b")
+```
+
+
+
 class: title-slide, center, middle
 
 # R로 package 만들어서 Simulation
@@ -56,9 +66,9 @@ class: contents
 - git(hub)
 - 시뮬레이션 분석
 - 사용할 package
-  - tidyverse
-      * dplyr, tidyr, ggplot2, purrr, magrittr
-  - lavaan
+  - `tidyverse`
+      * `dplyr`, `tidyr`, `ggplot2`, `purrr`, `magrittr`
+  - `lavaan`
 
 ---
 
@@ -88,7 +98,8 @@ class: contents
 연속형 변수를 범주화 해서 분석하면 얼마나 위험할까?
 
 ```{r echo=FALSE, fig.align="center", out.height = "200%"}
-include_graphics(file.path(report_path, "model_fig.png"))
+# include_graphics(file.path(report_path, "model_fig.png"))
+
 ```
 
 ---
