@@ -1,7 +1,6 @@
 ---
 output: 
   xaringan::moon_reader:
-    yolo: true
     css: ["default", "css/xaringan-themer.css"]
     nature:
       highlightStyle: github
@@ -43,10 +42,10 @@ load(file.path(report_path, "results.rdata"))
 ```
 
 ```{r xaringa-theme, include = F}
-library(xaringanthemer)
+# library(xaringanthemer)
+# library(xaringanExtra)
 # style_mono_light(base_color = "#23395b")
 ```
-
 
 
 class: title-slide, center, middle
@@ -71,6 +70,7 @@ class: contents
   - `lavaan`
 
 ---
+class: contents
 
 # Package for Simulation
 
@@ -81,6 +81,7 @@ class: contents
 - 패키지 자체가 연구인 경우
 
 ---
+class: contents
 
 # Simulation
 
@@ -99,18 +100,19 @@ class: contents
 
 ```{r echo=FALSE, fig.align="center", out.height = "200%"}
 # include_graphics(file.path(report_path, "model_fig.png"))
-
+ggplot(cars, aes(speed, dist)) + geom_point() + theme_bw()
 ```
 
 ---
 
 # 시뮬레이션 조건 함수
 
-.scroll-output[
+.scrollable-slide[
 
 ```{r}
-makeCondition <- function(n_sample, cov_size, n_indi, cut_size, n_rep, 
-                          full = T) {
+makeCondition <- function(n_sample, cov_size, n_indi, cut_size, 
+                          n_rep, full = T) {
+  
   con_list <-
     crossing(n_sample, cov_size, n_indi, cut_size) %>%
     mutate(condition_number = row_number())
@@ -123,73 +125,34 @@ makeCondition <- function(n_sample, cov_size, n_indi, cut_size, n_rep,
   return(con_list)
 }
 
+```
+]
+
+---
+
+```{r}
 condition_list <- 
   makeCondition(
-    n_sample = c(100, 500), cov_size = c(0, 0.5), n_indi = c(3, 6), 
-    cut_size = c(3,5,7), n_rep = 5, full = F)
-
-makeCondition <- function(n_sample, cov_size, n_indi, cut_size, n_rep, 
-                          full = T) {
-  con_list <-
-    crossing(n_sample, cov_size, n_indi, cut_size) %>%
-    mutate(condition_number = row_number())
-
-  if(full)
-    con_list <- 
-      crossing(con_list, n_rep = 1:n_rep) %>% 
-      arrange(n_rep, condition_number)
-
-  return(con_list)
-}
-
-condition_list <- 
-  makeCondition(
-    n_sample = c(100, 500), cov_size = c(0, 0.5), n_indi = c(3, 6), 
-    cut_size = c(3,5,7), n_rep = 5, full = F)
-
-
-makeCondition <- function(n_sample, cov_size, n_indi, cut_size, n_rep, 
-                          full = T) {
-  con_list <-
-    crossing(n_sample, cov_size, n_indi, cut_size) %>%
-    mutate(condition_number = row_number())
-
-  if(full)
-    con_list <- 
-      crossing(con_list, n_rep = 1:n_rep) %>% 
-      arrange(n_rep, condition_number)
-
-  return(con_list)
-}
-
-condition_list <- 
-  makeCondition(
-    n_sample = c(100, 500), cov_size = c(0, 0.5), n_indi = c(3, 6), 
-    cut_size = c(3,5,7), n_rep = 5, full = F)
-
-
-condition_list
+    n_sample = c(100, 500), 
+    cov_size = c(0, 0.5), 
+    n_indi = c(3, 6), 
+    cut_size = c(3,5,7), 
+    n_rep = 5, 
+    full = F)
 ```
 
+.scrollable-slide[
+```{r}
+knitr::kable(condition_list, format = "html")
+```
 ]
----
+
 
 ---
 class: center, middle 
 # Slide with some aligned text
 My name is Alison. I like hot toddies, `#rdogladies`,...
 .left[and babies.]
-
----
-
-.pull-left[
-...
-![a1](http://bit.ly/momtocat)
-]
-.pull-right[
-...
-![a1](http://bit.ly/momtocat)
-]
 
 ---
 
@@ -206,7 +169,7 @@ and babies
 
 .pull-left[
 ```{r plot-last, fig.show = 'hide'}
-plot(c(1:10))
+ggplot(cars, aes(speed, dist)) + geom_point() + theme_bw()
 ```
 ]
 .pull-right[

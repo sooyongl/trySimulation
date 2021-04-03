@@ -5,11 +5,10 @@
     <meta charset="utf-8" />
     <script src="intro_trySimulation_xaringan_files/header-attrs-2.7/header-attrs.js"></script>
     <link href="intro_trySimulation_xaringan_files/remark-css-0.0.1/default.css" rel="stylesheet" />
-    <link href="intro_trySimulation_xaringan_files/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/xaringan-themer.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
-
 
 
 
@@ -20,7 +19,7 @@ class: title-slide, center, middle
 
 # R로 package 만들어서 Simulation
 
-## 2021-04-01
+## 2021-04-02
 
 Sooyong Lee | Educational Psychology | The University of Texas at Austin
 
@@ -38,6 +37,7 @@ class: contents
   - `lavaan`
 
 ---
+class: contents
 
 # Package for Simulation
 
@@ -48,6 +48,7 @@ class: contents
 - 패키지 자체가 연구인 경우
 
 ---
+class: contents
 
 # Simulation
 
@@ -64,18 +65,19 @@ class: contents
 
 연속형 변수를 범주화 해서 분석하면 얼마나 위험할까?
 
-
+&lt;img src="intro_trySimulation_xaringan_files/figure-html/unnamed-chunk-1-1.png" width="576" height="200%" style="display: block; margin: auto;" /&gt;
 
 ---
 
 # 시뮬레이션 조건 함수
 
-.scroll-output[
+.scrollable-slide[
 
 
 ```r
-makeCondition &lt;- function(n_sample, cov_size, n_indi, cut_size, n_rep, 
-                          full = T) {
+makeCondition &lt;- function(n_sample, cov_size, n_indi, cut_size, 
+                          n_rep, full = T) {
+  
   con_list &lt;-
     crossing(n_sample, cov_size, n_indi, cut_size) %&gt;%
     mutate(condition_number = row_number())
@@ -87,93 +89,218 @@ makeCondition &lt;- function(n_sample, cov_size, n_indi, cut_size, n_rep,
 
   return(con_list)
 }
-
-condition_list &lt;- 
-  makeCondition(
-    n_sample = c(100, 500), cov_size = c(0, 0.5), n_indi = c(3, 6), 
-    cut_size = c(3,5,7), n_rep = 5, full = F)
-
-makeCondition &lt;- function(n_sample, cov_size, n_indi, cut_size, n_rep, 
-                          full = T) {
-  con_list &lt;-
-    crossing(n_sample, cov_size, n_indi, cut_size) %&gt;%
-    mutate(condition_number = row_number())
-
-  if(full)
-    con_list &lt;- 
-      crossing(con_list, n_rep = 1:n_rep) %&gt;% 
-      arrange(n_rep, condition_number)
-
-  return(con_list)
-}
-
-condition_list &lt;- 
-  makeCondition(
-    n_sample = c(100, 500), cov_size = c(0, 0.5), n_indi = c(3, 6), 
-    cut_size = c(3,5,7), n_rep = 5, full = F)
-
-
-makeCondition &lt;- function(n_sample, cov_size, n_indi, cut_size, n_rep, 
-                          full = T) {
-  con_list &lt;-
-    crossing(n_sample, cov_size, n_indi, cut_size) %&gt;%
-    mutate(condition_number = row_number())
-
-  if(full)
-    con_list &lt;- 
-      crossing(con_list, n_rep = 1:n_rep) %&gt;% 
-      arrange(n_rep, condition_number)
-
-  return(con_list)
-}
-
-condition_list &lt;- 
-  makeCondition(
-    n_sample = c(100, 500), cov_size = c(0, 0.5), n_indi = c(3, 6), 
-    cut_size = c(3,5,7), n_rep = 5, full = F)
-
-
-condition_list
 ```
-
-```
-## # A tibble: 24 x 5
-##    n_sample cov_size n_indi cut_size condition_number
-##       &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;            &lt;int&gt;
-##  1      100      0        3        3                1
-##  2      100      0        3        5                2
-##  3      100      0        3        7                3
-##  4      100      0        6        3                4
-##  5      100      0        6        5                5
-##  6      100      0        6        7                6
-##  7      100      0.5      3        3                7
-##  8      100      0.5      3        5                8
-##  9      100      0.5      3        7                9
-## 10      100      0.5      6        3               10
-## # ... with 14 more rows
-```
-
 ]
+
 ---
-background-image: url(https://github.com/yihui/xaringan/releases/download/v0.0.2/karl-moustache.jpg)
----
+
+
+```r
+condition_list &lt;- 
+  makeCondition(
+    n_sample = c(100, 500), 
+    cov_size = c(0, 0.5), 
+    n_indi = c(3, 6), 
+    cut_size = c(3,5,7), 
+    n_rep = 5, 
+    full = F)
+```
+
+.scrollable-slide[
+
+```r
+knitr::kable(condition_list, format = "html")
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; n_sample &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; cov_size &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; n_indi &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; cut_size &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; condition_number &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 500 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 13 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 500 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 500 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 15 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 500 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 500 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 500 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 500 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 500 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 500 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 21 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 500 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 22 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 500 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 23 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 500 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 24 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
 
 ---
 class: center, middle 
 # Slide with some aligned text
 My name is Alison. I like hot toddies, `#rdogladies`,...
 .left[and babies.]
-
----
-
-.pull-left[
-...
-![a1](http://bit.ly/momtocat)
-]
-.pull-right[
-...
-![a1](http://bit.ly/momtocat)
-]
 
 ---
 
@@ -191,11 +318,11 @@ and babies
 .pull-left[
 
 ```r
-plot(c(1:10))
+ggplot(cars, aes(speed, dist)) + geom_point() + theme_bw()
 ```
 ]
 .pull-right[
-&lt;img src="intro_trySimulation_xaringan_files/figure-html/unnamed-chunk-3-1.png" width="576" /&gt;
+&lt;img src="intro_trySimulation_xaringan_files/figure-html/unnamed-chunk-5-1.png" width="576" /&gt;
 ]
 
 
