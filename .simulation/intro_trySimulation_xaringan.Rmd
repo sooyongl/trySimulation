@@ -1,7 +1,7 @@
 ---
 output: 
   xaringan::moon_reader:
-    css: ["default", "css/xaringan-themer.css"]
+    css: ["css/metro.css"]
     nature:
       highlightStyle: github
       highlightLines: true
@@ -41,14 +41,22 @@ report_path <- file.path(root, ".simulation")
 load(file.path(report_path, "results.rdata"))
 ```
 
-```{r xaringa-theme, include = F}
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
 # library(xaringanthemer)
-# library(xaringanExtra)
-# style_mono_light(base_color = "#23395b")
+# extra_css <- list(
+#   ".small" = list("font-size" = "90%"),
+#   ".full-width" = list(
+#     display = "flex",
+#     width   = "100%",
+#     flex    = "1 1 auto"
+#   )
+# )
+# style_extra_css(css = extra_css, outfile = "custom.css")
 ```
 
-
 class: title-slide, center, middle
+
 
 # R로 package 만들어서 Simulation
 
@@ -94,7 +102,7 @@ class: contents
 
 ---
 
-## 주제
+# 주제
 
 연속형 변수를 범주화 해서 분석하면 얼마나 위험할까?
 
@@ -107,7 +115,6 @@ ggplot(cars, aes(speed, dist)) + geom_point() + theme_bw()
 
 # 시뮬레이션 조건 함수
 
-.scrollable-slide[
 
 ```{r}
 makeCondition <- function(n_sample, cov_size, n_indi, cut_size, 
@@ -126,7 +133,7 @@ makeCondition <- function(n_sample, cov_size, n_indi, cut_size,
 }
 
 ```
-]
+
 
 ---
 

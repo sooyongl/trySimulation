@@ -82,24 +82,35 @@ body {
 
 
 /*code chunk*/
+/*remark-code is the class for code appearance */
 .remark-code, .remark-inline-code {
   font-family: Droid Mono, 'Lucida Console', Monaco, monospace;
 }
 .remark-code {
-  font-size: 0.9em;
+  font-size: 1em;
 }
 .remark-inline-code {
-  font-size: 1em;
+  font-size: .em;
   color: #09017F;
 }
-
 
 .remark-slide-number {
   color: #09017F;
   opacity: 1;
   font-size: 0.9em;
 }
+/*code highlighting and background color
+.hljs-github .hljs {
+    display: block;
+    overflow-x: auto;
+    padding: .5em;
+    color: #333;
+    background: #f8f8f8;
+}
+*/
+
 strong{color:#09017F;}
+
 a, a > code {
   color: #09017F;
   text-decoration: none;

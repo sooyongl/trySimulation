@@ -4,8 +4,7 @@
     <title>intro_trySimulation_xaringan.utf8</title>
     <meta charset="utf-8" />
     <script src="intro_trySimulation_xaringan_files/header-attrs-2.7/header-attrs.js"></script>
-    <link href="intro_trySimulation_xaringan_files/remark-css-0.0.1/default.css" rel="stylesheet" />
-    <link rel="stylesheet" href="css/xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="css/metro.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
@@ -16,10 +15,11 @@
 
 
 class: title-slide, center, middle
+layout: true
 
 # R로 package 만들어서 Simulation
 
-## 2021-04-02
+## 2021-04-03
 
 Sooyong Lee | Educational Psychology | The University of Texas at Austin
 
@@ -61,7 +61,7 @@ class: contents
 
 ---
 
-## 주제
+# 주제
 
 연속형 변수를 범주화 해서 분석하면 얼마나 위험할까?
 
@@ -71,7 +71,6 @@ class: contents
 
 # 시뮬레이션 조건 함수
 
-.scrollable-slide[
 
 
 ```r
@@ -90,7 +89,7 @@ makeCondition &lt;- function(n_sample, cov_size, n_indi, cut_size,
   return(con_list)
 }
 ```
-]
+
 
 ---
 
