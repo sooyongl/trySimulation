@@ -2,9 +2,9 @@
 
 export(analysis)
 export(dataCut)
+export(extractEst)
 export(genData)
 export(getBias)
-export(getEst)
 export(getPower)
 export(makeCondition)
 export(makePlot)

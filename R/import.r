@@ -8,3 +8,8 @@
 #' @importFrom glue glue
 #' @importFrom magrittr %>%
 NULL
+
+# suppressPackageStartupMessages(library(lavaan))
+# suppressPackageStartupMessages(library(tidyverse))
+# suppressPackageStartupMessages(library(MASS))
+# suppressPackageStartupMessages(library(glue))

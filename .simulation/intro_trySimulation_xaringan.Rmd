@@ -1,12 +1,12 @@
 ---
 output: 
   xaringan::moon_reader:
-    css: ["css/metro.css"]
+    css: ["default","css/font.css","css/mytheme.css"]
     nature:
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
-      ratio: "3:2"
+      ratio: "16:9"
     seal: false  
 ---
 ```{r setup, include=FALSE}
@@ -19,19 +19,10 @@ library(trySimulation)
 library(glue)
 library(xaringan)
 library(flipbookr)
+library(xaringanExtra)
 
- # xaringan::inf_mr()
-# theme_set(theme_roboto())
-
-# hori:
-# - left,
-# - center, 
-# - right
-# 
-# verti:
-# - top, 
-# - middle, 
-# - bottom
+xaringanExtra::use_tile_view()
+xaringanExtra::use_panelset()
 
 # https://arm.rbind.io/slides/xaringan.html#120
 
@@ -41,33 +32,19 @@ report_path <- file.path(root, ".simulation")
 load(file.path(report_path, "results.rdata"))
 ```
 
-
-```{r xaringan-themer, include=FALSE, warning=FALSE}
-# library(xaringanthemer)
-# extra_css <- list(
-#   ".small" = list("font-size" = "90%"),
-#   ".full-width" = list(
-#     display = "flex",
-#     width   = "100%",
-#     flex    = "1 1 auto"
-#   )
-# )
-# style_extra_css(css = extra_css, outfile = "custom.css")
-```
-
 class: title-slide, center, middle
 
 
-# R로 package 만들어서 Simulation
+# Simulation Study with Package Development
 
-## `r Sys.Date()`
+`r Sys.Date()`
 
-Sooyong Lee | Educational Psychology | The University of Texas at Austin
+### Sooyong Lee | Educational Psychology | The University of Texas at Austin
 
 ---
 class: contents
 
-# Contents
+## Contents
 
 - 시뮬레이션을 위한 패키지 만들기기
 - git(hub)
@@ -78,9 +55,10 @@ class: contents
   - `lavaan`
 
 ---
+
 class: contents
 
-# Package for Simulation
+## Package for Simulation
 
 - 엄청 큰 장점은 없음
 - 같이 배우면 좋을 거 같음
@@ -91,7 +69,7 @@ class: contents
 ---
 class: contents
 
-# Simulation
+## Simulation
 
 - 시뮬레이션에 필요한 거
   - 주제
@@ -102,19 +80,18 @@ class: contents
 
 ---
 
-# 주제
+## 주제
 
 연속형 변수를 범주화 해서 분석하면 얼마나 위험할까?
 
 ```{r echo=FALSE, fig.align="center", out.height = "200%"}
-# include_graphics(file.path(report_path, "model_fig.png"))
-ggplot(cars, aes(speed, dist)) + geom_point() + theme_bw()
+include_graphics(file.path(report_path, "model_fig.png"))
 ```
+
 
 ---
 
-# 시뮬레이션 조건 함수
-
+## 시뮬레이션 조건 함수
 
 ```{r}
 makeCondition <- function(n_sample, cov_size, n_indi, cut_size, 
@@ -134,10 +111,12 @@ makeCondition <- function(n_sample, cov_size, n_indi, cut_size,
 
 ```
 
-
 ---
 
-```{r}
+## 시뮬레이션 조건 함수
+
+.panel[.panel-name[code]
+```{r condition_list}
 condition_list <- 
   makeCondition(
     n_sample = c(100, 500), 
@@ -147,42 +126,15 @@ condition_list <-
     n_rep = 5, 
     full = F)
 ```
-
-.scrollable-slide[
-```{r}
-knitr::kable(condition_list, format = "html")
-```
 ]
 
-
----
-class: center, middle 
-# Slide with some aligned text
-My name is Alison. I like hot toddies, `#rdogladies`,...
-.left[and babies.]
-
----
-
-# Hi there
-My name is Alison
---
-I like hot toddies
---
-`#rdogladies`
---
-and babies
-
----
-
-.pull-left[
-```{r plot-last, fig.show = 'hide'}
-ggplot(cars, aes(speed, dist)) + geom_point() + theme_bw()
+.panel[.panel-name[result]
+```{r }
+condition_list
 ```
-]
-.pull-right[
-```{r ref.label = 'plot-last', echo = FALSE}
-```
+
 ]
 
-
 ---
+
+

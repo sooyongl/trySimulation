@@ -4,29 +4,32 @@
     <title>intro_trySimulation_xaringan.utf8</title>
     <meta charset="utf-8" />
     <script src="intro_trySimulation_xaringan_files/header-attrs-2.7/header-attrs.js"></script>
-    <link rel="stylesheet" href="css/metro.css" type="text/css" />
+    <link href="intro_trySimulation_xaringan_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="intro_trySimulation_xaringan_files/tile-view-0.2.6/tile-view.css" rel="stylesheet" />
+    <script src="intro_trySimulation_xaringan_files/tile-view-0.2.6/tile-view.js"></script>
+    <link href="intro_trySimulation_xaringan_files/panelset-0.2.6/panelset.css" rel="stylesheet" />
+    <script src="intro_trySimulation_xaringan_files/panelset-0.2.6/panelset.js"></script>
+    <link rel="stylesheet" href="css/font.css" type="text/css" />
+    <link rel="stylesheet" href="css/mytheme.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
 
 
 
-
-
-
 class: title-slide, center, middle
-layout: true
 
-# R로 package 만들어서 Simulation
 
-## 2021-04-03
+# Simulation Study with Package Development
 
-Sooyong Lee | Educational Psychology | The University of Texas at Austin
+2021-05-05
+
+### Sooyong Lee | Educational Psychology | The University of Texas at Austin
 
 ---
 class: contents
 
-# Contents
+## Contents
 
 - 시뮬레이션을 위한 패키지 만들기기
 - git(hub)
@@ -37,9 +40,10 @@ class: contents
   - `lavaan`
 
 ---
+
 class: contents
 
-# Package for Simulation
+## Package for Simulation
 
 - 엄청 큰 장점은 없음
 - 같이 배우면 좋을 거 같음
@@ -50,7 +54,7 @@ class: contents
 ---
 class: contents
 
-# Simulation
+## Simulation
 
 - 시뮬레이션에 필요한 거
   - 주제
@@ -61,16 +65,16 @@ class: contents
 
 ---
 
-# 주제
+## 주제
 
 연속형 변수를 범주화 해서 분석하면 얼마나 위험할까?
 
-&lt;img src="intro_trySimulation_xaringan_files/figure-html/unnamed-chunk-1-1.png" width="576" height="200%" style="display: block; margin: auto;" /&gt;
+&lt;img src="C:/Users/sooyong/Documents/GitHub/trySimulation/.simulation/model_fig.png" width="573" height="200%" style="display: block; margin: auto;" /&gt;
+
 
 ---
 
-# 시뮬레이션 조건 함수
-
+## 시뮬레이션 조건 함수
 
 
 ```r
@@ -90,9 +94,11 @@ makeCondition &lt;- function(n_sample, cov_size, n_indi, cut_size,
 }
 ```
 
-
 ---
 
+## 시뮬레이션 조건 함수
+
+.panel[.panel-name[code]
 
 ```r
 condition_list &lt;- 
@@ -104,228 +110,36 @@ condition_list &lt;-
     n_rep = 5, 
     full = F)
 ```
+]
 
-.scrollable-slide[
+.panel[.panel-name[result]
 
 ```r
-knitr::kable(condition_list, format = "html")
+condition_list
 ```
 
-&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:right;"&gt; n_sample &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; cov_size &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; n_indi &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; cut_size &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; condition_number &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 100 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 100 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 100 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 100 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 100 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 100 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 100 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 100 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 100 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 100 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 100 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 100 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 12 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 500 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 13 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 500 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 14 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 500 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 15 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 500 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 16 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 500 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 17 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 500 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 18 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 500 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 19 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 500 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 500 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 21 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 500 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 22 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 500 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 23 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 500 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 24 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-]
-
-
----
-class: center, middle 
-# Slide with some aligned text
-My name is Alison. I like hot toddies, `#rdogladies`,...
-.left[and babies.]
-
----
-
-# Hi there
-My name is Alison
---
-I like hot toddies
---
-`#rdogladies`
---
-and babies
-
----
-
-.pull-left[
-
-```r
-ggplot(cars, aes(speed, dist)) + geom_point() + theme_bw()
 ```
-]
-.pull-right[
-&lt;img src="intro_trySimulation_xaringan_files/figure-html/unnamed-chunk-5-1.png" width="576" /&gt;
-]
+## # A tibble: 24 x 5
+##    n_sample cov_size n_indi cut_size condition_number
+##       &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;            &lt;int&gt;
+##  1      100      0        3        3                1
+##  2      100      0        3        5                2
+##  3      100      0        3        7                3
+##  4      100      0        6        3                4
+##  5      100      0        6        5                5
+##  6      100      0        6        7                6
+##  7      100      0.5      3        3                7
+##  8      100      0.5      3        5                8
+##  9      100      0.5      3        7                9
+## 10      100      0.5      6        3               10
+## # ... with 14 more rows
+```
 
+]
 
 ---
+
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
@@ -333,7 +147,7 @@ ggplot(cars, aes(speed, dist)) + geom_point() + theme_bw()
 "highlightStyle": "github",
 "highlightLines": true,
 "countIncrementalSlides": false,
-"ratio": "3:2"
+"ratio": "16:9"
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
