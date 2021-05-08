@@ -1,0 +1,66 @@
+---
+title: "Simulation Study with Package Development"
+author: "이수용 | Educational Psychology | The University of Texas at Austin"
+output: 
+  beamer_presentation:
+    theme: "Metropolis"
+    fonttheme: "professionalfonts"
+    colortheme: "dolphin"
+    
+---
+
+```{r setup, include=FALSE}
+# "Frankfurt"; "Metropolis"
+library(MASS); library(tidyverse); library(ggpubr); library(lavaan)
+
+knitr::opts_chunk$set(
+  echo = FALSE
+  )
+
+root <- rprojroot::find_rstudio_root_file()
+report_path <- file.path(root, ".report")
+
+
+```
+
+
+## Outline
+
+- Growth Mixture Modeling
+
+- Common Procedure of GMM
+
+- Misspecification of Time-loading Matrix
+
+- Alternative approaches
+
+- Simulation Study
+
+## Growth Mixture Modeling
+
+### Growth Mixture Modeling
+\hfill
+- Longitudinal data analysis: dealing with repeated measures on some characteristics over time (ex. trajectories of math ability in children, depressive symptoms across the life course).
+
+- Extension of Latent Growth Curve Modeling (LGM); including latent classes into growth curve modeling
+
+- Latent classes in GMM indicate possible heterogeneity of growth trajectories
+
+- Classifies individuals into different trajectory classes
+
+### Latent Growth Curve Modeling
+\hfill
+
+- Estimates an overall trajectory best representing individuals' changes over time.
+
+---
+
+<!--
+
+---
+
+```{r out.height = "60%", fig.cap = "Diagram of Latent Growth Modeling"}
+knitr::include_graphics("./figure/math_ability_lgm.png")
+```
+
+-->

@@ -15,6 +15,7 @@ library(kableExtra)
 library(psych)
 library(trySimulation)
 library(glue)
+library(trySimulation)
 
 root <- rprojroot::find_rstudio_root_file()
 report_path <- file.path(root, ".simulation")

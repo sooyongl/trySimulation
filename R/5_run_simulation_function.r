@@ -21,7 +21,7 @@ runSimulation <- function(condition_full) {
 
     .fit <- analysis(cut.data)
 
-    est <- getEst(.fit)
+    est <- extractEst(.fit)
 
     res[[tn]] <- cbind(condition_full[tn, ], est)
   }

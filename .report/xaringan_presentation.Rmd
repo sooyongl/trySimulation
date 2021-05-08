@@ -1,0 +1,617 @@
+---
+output: 
+  xaringan::moon_reader:
+    css: ["default","css/font.css","css/mytheme.css"]
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+    seal: false  
+---
+```{r setup, include=FALSE}
+
+# css
+# metropolis
+# css: ["default","css/font.css","css/mytheme.css"]
+
+knitr::opts_chunk$set(
+  echo = T, 
+  fig.retina = 3, 
+  warning = FALSE, 
+  message = FALSE)
+
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(psych)
+library(trySimulation)
+library(glue)
+library(xaringan)
+library(flipbookr)
+library(xaringanExtra)
+library(trySimulation)
+
+
+xaringanExtra::use_tile_view()
+xaringanExtra::use_panelset()
+style_panelset_tabs(foreground = "honeydew", background = "seagreen")
+
+# https://arm.rbind.io/slides/xaringan.html#120
+
+root <- rprojroot::find_rstudio_root_file()
+report_path <- file.path(root, ".report")
+```
+
+class: title-slide, center, middle
+
+
+# Simulation Study with Package Development
+
+`r Sys.Date()`
+
+### Sooyong Lee | Educational Psychology | The University of Texas at Austin
+
+---
+
+# Contents
+
+- 시뮬레이션을 위한 패키지 만들기기
+- git(hub)
+- 시뮬레이션 분석
+- 사용할 package
+  - `tidyverse`
+      * `dplyr`, `tidyr`, `ggplot2`, `purrr`, `magrittr`
+  - `lavaan`
+  - `MASS`
+
+---
+
+# Package for Simulation
+
+- 엄청 큰 장점은 없음
+- 같이 배우면 좋을 거 같음
+- 연구 보관이 용이함.
+  - 언제든지 다시 하거나, 수정하기 쉬움
+- 패키지 자체가 연구인 경우
+
+---
+
+# Simulation Materials
+
+- 주제
+- 시뮬레이션 조건 함수
+- 데이터 생성 함수
+- 분석 함수
+- 정리 함수
+- 결과 정리 함수 (그래프 등)
+
+---
+
+# Simulation Topic
+
+연속형 변수를 범주화 해서 분석하면 얼마나 위험할까?
+
+```{r echo=FALSE, fig.align="center", out.height = "50%", out.width = "50%"}
+include_graphics(
+  file.path(report_path, "example.png"),
+  dpi = 300)
+```
+
+$$-\infty \sim \infty$$
+
+$$1 \text{ }\text{ }\text{ }\text{ } 2 \text{ }\text{ }\text{ }\text{ } 3 \text{ }\text{ }\text{ }\text{ } 4 \text{ }\text{ }\text{ }\text{ } 5$$
+
+$$1 \text{ }\text{ }\text{ }\text{ } 2 \text{ }\text{ }\text{ }\text{ } 3$$
+
+$$1 \text{ }\text{ }\text{ }\text{ } 2$$
+
+> .blue[**b** 는 변수가 범주화하면 얼마나 변할까? ]
+
+
+---
+
+# Population Model
+
+```{r echo=FALSE, fig.align="center", out.height = "100%", out.width = "100%"}
+include_graphics(
+  file.path(report_path, "model_fig.png"),
+  dpi = 300)
+```
+
+$$\Sigma = Cov(X) = \Lambda \Phi \Lambda^T + \Theta$$
+---
+
+# Functions
+
+## generate conditions 
+
+.panelset[
+
+.panel[.panel-name[function]
+```{r eval=FALSE, include=T}
+makeCondition <- function(n_sample, cov_size, n_indi, cut_size, 
+                          n_rep, full = T) {
+  
+  con_list <-
+    crossing(n_sample, cov_size, n_indi, cut_size) %>%
+    mutate(condition_number = row_number())
+
+  if(full)
+    con_list <- 
+      crossing(con_list, n_rep = 1:n_rep) %>% 
+      arrange(n_rep, condition_number)
+
+  return(con_list)
+}
+
+```
+
+]
+
+.panel[.panel-name[code]
+```{r condition_list}
+condition_list <- 
+  makeCondition(
+    n_sample = c(100, 500),  #<<
+    cov_size = c(0, 0.5),    #<<  
+    n_indi = c(3, 6),        #<<  
+    cut_size = c(3,5,7),     #<<  
+    n_rep = 5,               #<<
+    full = T)
+```
+]
+
+.panel[.panel-name[result]
+```{r echo=FALSE}
+condition_list
+```
+]
+]
+
+---
+
+## generate data
+
+.panelset[
+.panel[.panel-name[function]
+
+.scroll-box-18[
+```{r eval=FALSE, include=T}
+library(MASS)
+genData <- function(N, cov_size, n_indi) {
+
+  factor_loadings <- matrix(
+    c(rep(c(1,0), n_indi), rep(c(0,1), n_indi)),
+    ncol = 2,
+    byrow = T
+  )
+
+  latent_matrix <- matrix(
+    c(1, cov_size,
+      cov_size, 1),
+    ncol = 2
+  )
+
+  error_terms <- diag(0.5, n_indi*2)
+
+  model_impled <- factor_loadings %*% latent_matrix %*% t(factor_loadings) + error_terms
+
+  mean_vector <- rep(0, n_indi*2)
+
+  g.data <- mvrnorm(N, mean_vector, Sigma = model_impled)
+  g.data <- data.frame(g.data)
+
+  return(g.data)
+}
+```
+]
+]
+
+.panel[.panel-name[code]
+```{r gen_data}
+gen.data <- genData(
+  N = 10, 
+  cov_size = 0, 
+  n_indi = 3)
+```
+]
+
+.panel[.panel-name[result]
+```{r echo=FALSE}
+gen.data
+```
+]
+]
+
+---
+
+## cut data
+
+.panelset[
+.panel[.panel-name[function]
+
+.scroll-box-18[
+```{r eval=FALSE, include=T}
+library(MASS)
+dataCut <- function(.data, cut_size) {
+
+  cut.data <- apply(.data, 2, function(x) cut(x = x, breaks = cut_size, labels = F))
+
+  cut.data <- data.frame(cut.data)
+
+  return(cut.data)
+}
+```
+]
+]
+
+.panel[.panel-name[code]
+```{r }
+cut5.data <- dataCut(
+  gen.data, 
+  cut_size = 5)
+
+cut3.data <- dataCut(
+  gen.data, 
+  cut_size = 3)
+
+```
+]
+
+.panel[.panel-name[result]
+.scroll-box-18[
+```{r echo=FALSE}
+cut5.data
+```
+```{r echo=FALSE}
+cut3.data
+```
+]
+]
+]
+
+---
+
+## analysis
+
+### `lavaan` package
+
+.panelset[
+.panel[.panel-name[syntax]
+.scroll-box-18[
+.center[lavaan / mplus
+
+`=~` = `by`
+
+`~~` = `with`
+
+`~`  = `on`
+]
+
+]
+]
+.panel[.panel-name[lavaan]
+
+.scroll-box-18[
+```{r}
+library(lavaan)
+.data <- genData(N = 150, cov_size = 0.5, n_indi = 3) #<<
+
+.model <- '                           #<<
+      F1 =~ X1 + X2 + X3 
+      F2 =~ X4 + X5 + X6
+
+      F1 ~~ F2
+  '
+
+.fit <- lavaan::sem(model = .model,  #<<
+                    data  = .data    #<<
+                    )
+
+summary(.fit, fit.measures=TRUE)
+```
+]
+]
+]
+
+---
+
+## analysis
+
+.panelset[
+.panel[.panel-name[function]
+
+.scroll-box-18[
+```{r eval=FALSE, include=T}
+library(lavaan)
+analysis <- function(.data) {
+
+  n_indi <- dim(.data)[2]/2
+
+  for_f1 <- paste0("X", 1:n_indi)
+  for_f2 <- paste0("X", (n_indi+1):(2*n_indi))
+
+  for_f1 <- paste(for_f1, collapse = " + ")
+  for_f2 <- paste(for_f2, collapse = " + ")
+
+  .model <- glue('
+      F1 =~ {for_f1}
+      F2 =~ {for_f2}
+
+      F1 ~~ F2
+  ')
+
+  .fit <- lavaan::sem(model = .model,
+                      data  = .data )
+
+  # summary(.fit)
+  return(.fit)
+}
+```
+]
+]
+
+.panel[.panel-name[code]
+```{r }
+.fit <- analysis(cut5.data)
+```
+]
+
+.panel[.panel-name[result]
+.scroll-box-18[
+```{r echo=FALSE}
+summary(.fit, fit.measures=TRUE)
+```
+]
+]
+]
+
+---
+
+## extractEst
+
+.panelset[
+.panel[.panel-name[function]
+
+.scroll-box-18[
+```{r eval=FALSE, include=T}
+library(lavaan)
+extractEst <- function(.fit) {
+  parameterestimates(.fit) %>%
+    filter(str_detect(op, "=~") | str_detect(lhs, "F1|F2")) %>%
+    filter(se != 0) %>%
+    mutate(type = paste0(lhs, op, rhs)) %>%
+    dplyr::select(type, est, pvalue)
+}
+```
+]
+]
+
+.panel[.panel-name[code]
+```{r }
+extracted <- extractEst(.fit)
+```
+]
+
+.panel[.panel-name[result]
+.scroll-box-18[
+```{r echo=FALSE}
+extracted
+```
+]
+]
+]
+
+---
+
+## run simulation 
+
+.panelset[
+.panel[.panel-name[function]
+
+.scroll-box-18[
+```{r eval=FALSE, include=T}
+runSimulation <- function(condition_full) {
+
+  total_n <- dim(condition_full)[1]
+
+  res <- vector("list", total_n)
+  for(tn in 1:total_n) {
+
+    n_sample         <- condition_full$n_sample[tn]
+    cov_size         <- condition_full$cov_size[tn]
+    n_indi           <- condition_full$n_indi[tn]
+    cut_size         <- condition_full$cut_size[tn]
+    condition_number <- condition_full$condition_number[tn]
+    n_rep            <- condition_full$n_rep[tn]
+
+    original.data <- genData(N = n_sample, cov_size = cov_size, n_indi = n_indi)
+    cut.data <- dataCut(original.data, cut_size)
+
+    .fit <- analysis(cut.data)
+
+    est <- extractEst(.fit)
+
+    res[[tn]] <- cbind(condition_full[tn, ], est)
+  }
+
+  res <- do.call('rbind', res)
+  return(res)
+}
+```
+]
+]
+
+.panel[.panel-name[code]
+```{r eval=FALSE, include=T}
+sim_result <- runSimulation(condition_list)
+```
+]
+
+.panel[.panel-name[result]
+.scroll-box-18[
+```{r echo=FALSE}
+sim_result <- readRDS(file.path(root, ".test","sim_result.rds"))
+sim_result
+```
+]
+]
+]
+
+---
+
+## calculate outcomes
+
+.panelset[
+.panel[.panel-name[function]
+
+.scroll-box-18[
+```{r eval=FALSE, include=T}
+getPower <- function(results) {
+  results %>%
+    filter(str_detect(type, "F1~~F2")) %>%
+    mutate(rate = if_else(pvalue < 0.05, 1, 0)) %>%
+    group_by(n_sample, cov_size, n_indi, cut_size) %>%
+    summarise(mean_rate = mean(rate))
+}
+
+getAccuracy <- function(results) {
+  results %>%
+    mutate(pop_value = case_when(cov_size == 0 & type == "F1~~F2" ~ 0,
+                                 cov_size == 0.5 & type == "F1~~F2" ~ 0.5,
+                                 TRUE ~ 1),
+           type = case_when(str_detect(type, "=~") ~ "factor_loading",
+                            type == "F1~~F2" ~ "latent_cov",
+                            TRUE ~ "latent_var")) %>%
+    group_by(n_sample, cov_size, n_indi, cut_size, type) %>%
+    summarise(
+      Bias = mean(est - pop_value),
+      RMSE = sqrt( mean((est - pop_value)^2) )
+    )
+}
+```
+]
+]
+
+.panel[.panel-name[code]
+```{r}
+power_res <- getPower(sim_result)
+bias_res <- getAccuracy(sim_result)
+```
+]
+
+.panel[.panel-name[result]
+.scroll-box-18[
+```{r echo=FALSE}
+power_res
+```
+```{r echo=FALSE}
+bias_res
+```
+]
+]
+]
+
+
+---
+
+## plot
+
+.panelset[
+.panel[.panel-name[function]
+
+.scroll-box-18[
+```{r eval=FALSE, include=T}
+makePlot <- function(results, what = "RMSE", font_size = 14, point_size = 2, alpha = 1) {
+
+  theme_set(theme_bw(base_size = font_size))
+
+  if(what == "RMSE" | what == "Bias" ) {
+    p1 <-
+      results %>%
+      filter(cov_size != 0) %>%
+      mutate_at(vars(matches("_")), as.factor) %>%
+      ggplot(aes(x = cut_size, y = !!as.name(what)))
+
+  } else {
+    if(tolower(what) == "power") {
+      p1 <-
+        results %>%
+        filter(cov_size != 0) %>%
+        mutate_at(vars(matches("_")), as.factor) %>%
+        ggplot(aes(x = cut_size, y = mean_rate))
+
+    } else {
+      p1 <-
+        results %>%
+        filter(cov_size == 0) %>%
+        mutate_at(vars(matches("_")), as.factor) %>%
+        ggplot(aes(x = cut_size, y = mean_rate))
+    }
+  }
+
+
+  p2 <- p1 +
+    geom_point(aes(colour = n_sample, shape = n_sample),
+               size = point_size, alpha = alpha) +
+    scale_x_discrete(name = "Cut size") +
+    scale_shape_discrete(name = "Sample size") +
+    scale_colour_manual(name = "Sample size",
+                        values = c("#EB322F","#2F88ED"))
+
+  if(what == "RMSE" | what == "Bias" ) {
+    p2 + facet_grid(n_indi ~ type)
+  } else {
+    p2 + facet_grid(n_indi ~ .)
+  }
+}
+```
+]
+]
+
+.panel[.panel-name[code]
+```{r }
+rmse_p <- makePlot(bias_res, what = "RMSE", font_size = 12)
+bias_p <- makePlot(bias_res, what = "Bias", font_size = 12)
+power_p <- makePlot(power_res, what = "power", font_size = 12)
+typeierror_p <- makePlot(power_res, what = "typeIerror", font_size = 12)
+```
+]
+
+]
+
+---
+# Power
+```{r echo=FALSE}
+te_p <- typeierror_p + labs(title = "Type I error", y = "Type I error")
+power_p <- power_p  + labs(title = "Power", y = "Power")
+rmse_p <- rmse_p + labs(title = "RMSE")
+bias_p <- bias_p + geom_hline(yintercept = 0, size = 1.2, alpha = 0.8, linetype = "dotted")+ labs(title = "Bias")
+```
+
+
+```{r echo=FALSE , out.height='30%', out.width='80%'}
+ggpubr::ggarrange(te_p, power_p,
+                  ncol = 2, nrow = 1,
+                  common.legend = T)
+
+```
+
+
+
+---
+# Accuracy
+
+.scroll-box-20[
+```{r echo=FALSE, out.height='30%', out.width='100%'}
+ggpubr::ggarrange(rmse_p, bias_p,
+                  ncol = 2, nrow = 1,
+                  common.legend = T)
+
+```
+]
+
+
+
+

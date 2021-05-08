@@ -67,6 +67,7 @@ a:hover { border-bottom: none; }
 .remark-slide-content {
   font-size:          1.6rem;
   line-height:        3.0rem;
+  background-color:  var(--White);
 }
 
 /*-- HORIZONTAL BARS --*/
@@ -154,16 +155,17 @@ div.footer-link {
 
 /*-- In-line highlighting within text --*/
 .remark-code, .remark-inline-code {
-  font-size:          80%;
-  color:              var(--my-blue);
+  font-size:          100%;
+  font-weight:        500;
+  color:              var(--Black);
   background:         var(--PaleGrey);
   border-radius:      3px;
-  padding:            1px 1px 1px 1px;
+  padding:            5px 5px 5px 5px;
 }
 
 /*-- Line highlighting within code --*/
 .remark-code-line-highlighted {
-  background-color:   var(--PaleGrey);
+  background-color:   #FFFF77;
 }
 
 /*-- CODE CHUNKS --*/
@@ -176,6 +178,7 @@ pre {
   padding:            0.1em;                    /* padding between code chunk and border */
   background:         none !important;
   overflow-x:         auto;                     /* enable horizontal scrolling with overflow */
+  overflow-y:         auto;
   border-radius:      1px;                      /* modify rounding of corners*/
 }
 
@@ -183,7 +186,7 @@ pre {
 pre code {
   background:         none;
   font-size:          18px !important;
-  line-height:        1.0em;
+  line-height:        1.1em;
 }
 
 /* -- CUSTOM CLASSES ---------------------------------------------------------*/
@@ -191,8 +194,8 @@ pre code {
 /*-- Custom class for the title slide --*/
 
 .title-slide {
-  /*background-color:   #E7EDF8;*/
-  background-color:   #FFFFFF;
+  background-color:   var(--PaleGrey);
+  /*background-color:   #FFFFFF;*/
   color:              var(--my-yellow);
 }
 /*-- Headings --*/
@@ -280,12 +283,12 @@ pre code {
   justify-content: center;
   align-items: flex-start;
 }
-
+*/
 .column {
   float: left;
-  width: 25%;
+  width: 100%;
   text-align: center;
-}*/
+}
 
 /*.columns { display: flex; }*/
 
@@ -373,3 +376,50 @@ padding-right:20px;
 .incrementClass:before {
    counter-increment: page;
 } 
+
+/******************
+ * Slide scrolling
+ * (non-functional)
+ * not sure if it is a good idea anyway
+slides > slide {
+  overflow: scroll;
+ padding: 5px 40px;
+}
+.scrollable-slide .remark-slide {
+  height: 400px;
+  overflow: scroll !important;
+}
+ ******************/
+
+.scroll-box-8 {
+  height:8em;
+  overflow-y: scroll;
+}
+.scroll-box-10 {
+  height:10em;
+  overflow-y: scroll;
+}
+.scroll-box-12 {
+  height:12em;
+  overflow-y: scroll;
+}
+.scroll-box-14 {
+  height:14em;
+  overflow-y: scroll;
+}
+.scroll-box-16 {
+  height:16em;
+  overflow-y: scroll;
+}
+.scroll-box-18 {
+  height:18em;
+  overflow-y: scroll;
+}
+.scroll-box-20 {
+  height:20em;
+  overflow-y: scroll;
+}
+.scroll-output {
+  height: 90%;
+  overflow-y: scroll;
+}

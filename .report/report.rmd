@@ -28,9 +28,9 @@ library(knitr)
 library(kableExtra)
 
 root <- rprojroot::find_rstudio_root_file()
-report_path <- file.path(root, ".simulation")
+result_path <- file.path(root, ".simulation")
 
-load(file.path(report_path, "results.rdata"))
+load(file.path(result_path, "results.rdata"))
 # ls()
 ```
 

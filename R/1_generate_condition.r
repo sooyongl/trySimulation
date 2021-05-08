@@ -16,7 +16,9 @@ makeCondition <- function(n_sample, cov_size, n_indi, cut_size, n_rep, full = T)
     mutate(condition_number = row_number())
 
   if(full)
-    con_list <- crossing(con_list, n_rep = 1:n_rep) %>% arrange(n_rep, condition_number)
+    con_list <-
+      crossing(con_list, n_rep = 1:n_rep) %>%
+      arrange(n_rep, condition_number)
 
   return(con_list)
 }

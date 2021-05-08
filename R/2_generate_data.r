@@ -30,10 +30,9 @@ genData <- function(N, cov_size, n_indi) {
 
   model_impled <- factor_loadings %*% latent_matrix %*% t(factor_loadings) + error_terms
 
-
   mean_vector <- rep(0, n_indi*2)
 
-  g.data <- MASS::mvrnorm(N, mean_vector, Sigma = model_impled)
+  g.data <- mvrnorm(N, mean_vector, Sigma = model_impled)
   g.data <- data.frame(g.data)
   return(g.data)
 }
@@ -70,8 +69,7 @@ ggenData <- function(
 
   end1 <- lam_y %*% solve(I1 - Beta) %*% ((Gamma %*% Phi %*% t(Gamma)) + Psi ) %*% solve(t(I1 - Beta)) %*% t(lam_y) + error_y
 
-  cov1 <- lam_x %*% Phi %*% t(Gamma) %*% solve(t(I1 - Beta)) %*% t(lam_y) #+ error_x
-
+  cov1 <- lam_x %*% Phi %*% t(Gamma) %*% solve(t(I1 - Beta)) %*% t(lam_y)
   exg1 <- lam_x %*% Phi %*% t(lam_x) + t(error_x)
 
   cov2 <- lam_y %*% solve(I1 - Beta) %*% Gamma %*% Phi %*% t(lam_x)
