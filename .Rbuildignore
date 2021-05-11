@@ -3,3 +3,4 @@
 ^\.simulation$
 ^\.test$
 ^\.report$
+^\.introR$

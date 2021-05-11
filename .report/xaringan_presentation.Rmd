@@ -80,6 +80,7 @@ class: title-slide, center, middle
 # Simulation Materials
 
 - 주제
+- population model
 - 시뮬레이션 조건 함수
 - 데이터 생성 함수
 - 분석 함수
@@ -120,6 +121,13 @@ include_graphics(
 ```
 
 $$\Sigma = Cov(X) = \Lambda \Phi \Lambda^T + \Theta$$
+---
+
+# github
+
+- git: 코드 관리 프로그램
+- github: 코드 저장소
+
 ---
 
 # Functions
