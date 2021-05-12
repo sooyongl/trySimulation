@@ -177,11 +177,12 @@ lambda %*% pi %*% t(lambda) + theta
 .panelset[
 .panel[.panel-name[condition]
 
-- sample size
-- number of indicators per factor
-- covaraince between factors: 0, 0.5
+- sample size: **100, 500**
+- number of indicators per factor: **3, 6**
+- covaraince between factors: **0, 0.5**
   - cov = 0인 경우 유의하면 -> type I error 
   - cov = 0.5인 경우 유의하면 -> power
+- categorization: **3, 5, 7**
 - all other things are fixed
 
 ]
@@ -235,7 +236,7 @@ condition_list
 
 .panel[.panel-name[data]
 
-- 조건에 맞게 $\Sigma$ 가 생성해야야 함.
+- 조건에 맞게 $\Sigma$ 가 생성해야 함.
 
 $$\Sigma = Cov(X) = \Lambda \Phi \Lambda^T + \Theta$$
 ```{r}
@@ -547,8 +548,8 @@ $$\text{RMSE=}\sqrt{\sum(\hat{\theta}-\theta)^2/N}$$
 
 ## Power & Type I error
 
-- when covariance = 0, the replications of being significant / total replication
-- when covariance = 0.5, the replications of being significant / total replication
+- Type I error: when covariance = 0, the replications of being significant / total replication
+- Power: when covariance = 0.5, the replications of being significant / total replication
 
 ]
 
