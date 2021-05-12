@@ -301,13 +301,23 @@ pre code {
   width: 20%;
 }
 
+.pull-right-narrow {
+  float: right;
+  width: 35%;
+}
+
 .pull-right-wide {
   float: right;
   width: 75%;
 }
 
-/* Clear floats after the columns */
+.pull-left-wide {
+  float: left;
+  width: 65%;
+}
+/* Clear floats after the columns 
 .pull-right-wide + * { clear: both; }
+*/
 
 /*-- CUSTOM CLASSES FOR EDUCATIONAL PURPOSES ---------------------------------*/
 

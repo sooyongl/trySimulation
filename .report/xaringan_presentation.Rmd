@@ -56,7 +56,7 @@ class: title-slide, center, middle
 
 # Contents
 
-- 시뮬레이션을 위한 패키지 만들기기
+- R package
 - git(hub)
 - 시뮬레이션 분석
 - 사용할 package
@@ -77,15 +77,35 @@ class: title-slide, center, middle
 
 ---
 
+# Package for Simulation
+
+- R project 생성
+  - file -> new project ...
+- document 설정
+  - roxyzen2
+- 폴더 구조
+  - man, R / .Rbuildignore
+- install package
+
+---
+
+# git(hub)
+
+- git: code 관리 프로그램
+- github: code 업로드드
+- commit / push / pull
+
+---
+
 # Simulation Materials
 
-- 주제
+- study topic
 - population model
-- 시뮬레이션 조건 함수
-- 데이터 생성 함수
-- 분석 함수
-- 정리 함수
-- 결과 정리 함수 (그래프 등)
+- condition; 시뮬레이션 조건 함수
+- data generation; 데이터 생성 함수
+- analysis; 분석 함수
+- estimate cleaning; 정리 함수
+- report; 그래프, 표...
 
 ---
 
@@ -114,13 +134,33 @@ $$1 \text{ }\text{ }\text{ }\text{ } 2$$
 
 # Population Model
 
-```{r echo=FALSE, fig.align="center", out.height = "100%", out.width = "100%"}
+.pull-left-wide[
+## Two factor CFA model
+
+```{r echo=FALSE, fig.align="left", out.height = "100%", out.width = "100%"}
 include_graphics(
   file.path(report_path, "model_fig.png"),
   dpi = 300)
 ```
+]
+
+.pull-right-narrow[
+
+## Covariance matrix
 
 $$\Sigma = Cov(X) = \Lambda \Phi \Lambda^T + \Theta$$
+```{r}
+theta <- diag(0.5, 6)
+lambda <- matrix(c(1,1,1,0,0,0,0,0,0,1,1,1), ncol = 2)
+pi <- matrix(c(1,0.5, 0.5, 1), ncol = 2)
+
+lambda %*% pi %*% t(lambda) + theta
+```
+
+
+]
+
+
 ---
 
 # github
@@ -135,6 +175,16 @@ $$\Sigma = Cov(X) = \Lambda \Phi \Lambda^T + \Theta$$
 ## generate conditions 
 
 .panelset[
+.panel[.panel-name[condition]
+
+- sample size
+- number of indicators per factor
+- covaraince between factors: 0, 0.5
+  - cov = 0인 경우 유의하면 -> type I error 
+  - cov = 0.5인 경우 유의하면 -> power
+- all other things are fixed
+
+]
 
 .panel[.panel-name[function]
 ```{r eval=FALSE, include=T}
@@ -182,6 +232,22 @@ condition_list
 ## generate data
 
 .panelset[
+
+.panel[.panel-name[data]
+
+- 조건에 맞게 $\Sigma$ 가 생성해야야 함.
+
+$$\Sigma = Cov(X) = \Lambda \Phi \Lambda^T + \Theta$$
+```{r}
+theta <- diag(0.5, 6)
+lambda <- matrix(c(1,1,1,0,0,0,0,0,0,1,1,1), ncol = 2)
+pi <- matrix(c(1,0.5, 0.5, 1), ncol = 2)
+
+lambda %*% pi %*% t(lambda) + theta
+```
+
+]
+
 .panel[.panel-name[function]
 
 .scroll-box-18[
@@ -472,6 +538,21 @@ sim_result
 ## calculate outcomes
 
 .panelset[
+
+.panel[.panel-name[outcome]
+
+## Accuracy
+$$\text{Bias=}\sum(\hat{\theta}-\theta)/N$$
+$$\text{RMSE=}\sqrt{\sum(\hat{\theta}-\theta)^2/N}$$
+
+## Power & Type I error
+
+- when covariance = 0, the replications of being significant / total replication
+- when covariance = 0.5, the replications of being significant / total replication
+
+]
+
+
 .panel[.panel-name[function]
 
 .scroll-box-18[
@@ -619,6 +700,26 @@ ggpubr::ggarrange(rmse_p, bias_p,
 
 ```
 ]
+
+
+---
+
+# push to github
+
+- commit -> push (how to use branch?)
+- install package
+
+
+---
+
+# Run simulation
+
+
+
+
+
+
+
 
 
 
