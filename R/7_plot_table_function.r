@@ -20,15 +20,20 @@ makePlot <- function(results, what = "RMSE", font_size = 14, point_size = 2, alp
       p1 <-
         results %>%
         filter(cov_size != 0) %>%
-        mutate_at(vars(matches("_")), as.factor) %>%
-        ggplot(aes(x = cut_size, y = mean_rate))
+        mutate_at(vars(matches("n_s|cov_|cut_")), as.factor) %>%
+        ggplot(aes(x = cut_size, y = mean_rate)) +
+        geom_hline(yintercept = .8)
 
     } else {
       p1 <-
         results %>%
         filter(cov_size == 0) %>%
-        mutate_at(vars(matches("_")), as.factor) %>%
-        ggplot(aes(x = cut_size, y = mean_rate))
+        mutate_at(vars(matches("n_s|cov_|cut_")), as.factor) %>%
+        ggplot(aes(x = cut_size, y = mean_rate)) +
+        geom_hline(yintercept = .05) +
+        annotate("rect", xmin=-Inf, xmax=Inf,
+                 ymin=.03, ymax=0.07,
+                 fill="green", alpha=0.05)
     }
   }
 

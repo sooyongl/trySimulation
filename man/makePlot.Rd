@@ -4,7 +4,7 @@
 \alias{makePlot}
 \title{make plots for results}
 \usage{
-makePlot(results, what = "RMSE", font_size)
+makePlot(results, what = "RMSE", font_size = 14, point_size = 2, alpha = 1)
 }
 \description{
 make plots for results

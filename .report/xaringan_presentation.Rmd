@@ -55,20 +55,21 @@ class: title-slide, center, middle
 ---
 
 # Contents
-
+----
 - R package
 - git(hub)
 - 시뮬레이션 분석
 - 사용할 package
+  - `devtool`, `roxyzen2`
   - `tidyverse`
-      * `dplyr`, `tidyr`, `ggplot2`, `purrr`, `magrittr`
+      * `dplyr`, `tidyr`, `ggplot2`, `purrr`, `%>%` from `magrittr`
   - `lavaan`
-  - `MASS`
+  - `mvrnorm` from `MASS`
 
 ---
 
 # Package for Simulation
-
+----
 - 엄청 큰 장점은 없음
 - 같이 배우면 좋을 거 같음
 - 연구 보관이 용이함.
@@ -78,7 +79,7 @@ class: title-slide, center, middle
 ---
 
 # Package for Simulation
-
+----
 - R project 생성
   - file -> new project ...
 - document 설정
@@ -90,7 +91,7 @@ class: title-slide, center, middle
 ---
 
 # git(hub)
-
+----
 - git: code 관리 프로그램
 - github: code 업로드드
 - commit / push / pull
@@ -98,7 +99,7 @@ class: title-slide, center, middle
 ---
 
 # Simulation Materials
-
+----
 - study topic
 - population model
 - condition; 시뮬레이션 조건 함수
@@ -110,7 +111,7 @@ class: title-slide, center, middle
 ---
 
 # Simulation Topic
-
+----
 연속형 변수를 범주화 해서 분석하면 얼마나 위험할까?
 
 ```{r echo=FALSE, fig.align="center", out.height = "50%", out.width = "50%"}
@@ -133,7 +134,7 @@ $$1 \text{ }\text{ }\text{ }\text{ } 2$$
 ---
 
 # Population Model
-
+----
 .pull-left-wide[
 ## Two factor CFA model
 
@@ -164,7 +165,7 @@ lambda %*% pi %*% t(lambda) + theta
 ---
 
 # github
-
+----
 - git: 코드 관리 프로그램
 - github: 코드 저장소
 
@@ -173,7 +174,7 @@ lambda %*% pi %*% t(lambda) + theta
 # Functions
 
 ## generate conditions 
-
+----
 .panelset[
 .panel[.panel-name[condition]
 
@@ -231,7 +232,7 @@ condition_list
 ---
 
 ## generate data
-
+----
 .panelset[
 
 .panel[.panel-name[data]
@@ -302,7 +303,7 @@ gen.data
 ---
 
 ## cut data
-
+----
 .panelset[
 .panel[.panel-name[function]
 
@@ -349,7 +350,7 @@ cut3.data
 ---
 
 ## analysis
-
+----
 ### `lavaan` package
 
 .panelset[
@@ -393,7 +394,7 @@ summary(.fit, fit.measures=TRUE)
 ---
 
 ## analysis
-
+----
 .panelset[
 .panel[.panel-name[function]
 
@@ -445,7 +446,7 @@ summary(.fit, fit.measures=TRUE)
 ---
 
 ## extractEst
-
+----
 .panelset[
 .panel[.panel-name[function]
 
@@ -481,7 +482,7 @@ extracted
 ---
 
 ## run simulation 
-
+----
 .panelset[
 .panel[.panel-name[function]
 
@@ -537,7 +538,7 @@ sim_result
 ---
 
 ## calculate outcomes
-
+----
 .panelset[
 
 .panel[.panel-name[outcome]
@@ -547,7 +548,7 @@ $$\text{Bias=}\sum(\hat{\theta}-\theta)/N$$
 $$\text{RMSE=}\sqrt{\sum(\hat{\theta}-\theta)^2/N}$$
 
 ## Power & Type I error
-
+----
 - Type I error: when covariance = 0, the replications of being significant / total replication
 - Power: when covariance = 0.5, the replications of being significant / total replication
 
@@ -607,7 +608,7 @@ bias_res
 ---
 
 ## plot
-
+----
 .panelset[
 .panel[.panel-name[function]
 

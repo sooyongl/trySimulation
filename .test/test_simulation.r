@@ -1,5 +1,5 @@
 # devtools::install_github("https://github.com/sooyongl/trySimulation")
-library(trySimulation); library(tidyverse)
+library(trySimulation);
 
 # for(source.function in list.files("R") { source(source.function)})
 
@@ -26,5 +26,5 @@ bias_res <- getAccuracy(sim_result)
 
 makePlot(bias_res, what = "RMSE", font_size = 12, point_size = 4)
 makePlot(bias_res, what = "Bias", font_size = 12)
-makePlot(power_res, what = "power", font_size = 12)
+makePlot(results = power_res, what = "power", font_size = 12)
 makePlot(power_res, what = "typeIerror", font_size = 12)
