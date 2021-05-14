@@ -1,0 +1,66 @@
+---
+title: "Figures"
+author: "Sooyong Lee"
+date: "5/14/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = F, 
+  fig.retina = 3,
+  out.height = '100%',
+  out.width = '100%',
+  warning = FALSE, 
+  message = FALSE)
+
+library(knitr)
+
+root <- rprojroot::find_rstudio_root_file()
+report_path <- file.path(root, ".report","fig")
+
+```
+
+## r project
+
+```{r}
+include_graphics(
+  file.path(report_path, "rproject_fig1.png"))
+```
+
+```{r}
+include_graphics(
+  file.path(report_path, "rproject_fig2.png"))
+```
+
+```{r}
+include_graphics(
+  file.path(report_path, "rproject_fig3.png"))
+```
+
+```{r}
+include_graphics(
+  file.path(report_path, "rproject_fig4.png"))
+```
+
+## github
+
+```{r}
+include_graphics(
+  file.path(report_path, "github_fig1.png"))
+```
+
+```{r}
+include_graphics(
+  file.path(report_path, "github_fig2.png"))
+```
+
+```{r}
+include_graphics(
+  file.path(report_path, "github_fig3.png"))
+```
+
+```{r}
+include_graphics(
+  file.path(report_path, "github_fig4.png"))
+```

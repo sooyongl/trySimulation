@@ -22,7 +22,7 @@ class: title-slide, center, middle
 
 # Simulation Study with Package Development
 
-2021-05-13
+2021-05-14
 
 ### Sooyong Lee | Educational Psychology | The University of Texas at Austin
 
@@ -43,7 +43,7 @@ class: title-slide, center, middle
 ---
 
 # Package for Simulation
-
+----
 - 엄청 큰 장점은 없음
 - 같이 배우면 좋을 거 같음
 - 연구 보관이 용이함.
@@ -53,7 +53,7 @@ class: title-slide, center, middle
 ---
 
 # Package for Simulation
-
+----
 - R project 생성
   - file -&gt; new project ...
 - document 설정
@@ -65,7 +65,7 @@ class: title-slide, center, middle
 ---
 
 # git(hub)
-
+----
 - git: code 관리 프로그램
 - github: code 업로드드
 - commit / push / pull
@@ -73,7 +73,7 @@ class: title-slide, center, middle
 ---
 
 # Simulation Materials
-
+----
 - study topic
 - population model
 - condition; 시뮬레이션 조건 함수
@@ -85,7 +85,7 @@ class: title-slide, center, middle
 ---
 
 # Simulation Topic
-
+----
 연속형 변수를 범주화 해서 분석하면 얼마나 위험할까?
 
 &lt;img src="C:/Users/sooyong/Documents/GitHub/trySimulation/.report/example.png" width="50%" height="50%" style="display: block; margin: auto;" /&gt;
@@ -104,7 +104,7 @@ class: title-slide, center, middle
 ---
 
 # Population Model
-
+----
 .pull-left-wide[
 ## Two factor CFA model
 
@@ -138,11 +138,24 @@ lambda %*% pi %*% t(lambda) + theta
 
 ]
 
+&lt;!-- $$ --&gt;
+&lt;!-- \begin{aligned} --&gt;
+&lt;!-- \Sigma &amp;= \left(\begin{array}{cc}  --&gt;
+&lt;!-- \Sigma_{yy} &amp; sym\\ --&gt;
+&lt;!-- \Sigma_{xy} &amp; \Sigma_{xx} --&gt;
+&lt;!-- \end{array}\right) \\ --&gt;
+&lt;!-- &amp;= \left(\begin{array}{cc}  --&gt;
+&lt;!-- \Lambda_y(I-B)^{-1}(\Gamma\Phi\Gamma^{\\'}+\Psi)(I-B)^{\\'-1}\Lambda_y + \Theta_\epsilon &amp; \Lambda_y(I-B)^{-1}\Gamma\Phi\Lambda^{\\'}\\ --&gt;
+&lt;!-- \Lambda_x\Phi\Gamma^{\\'}(I-B)^{-1}\Lambda^{\\'}_y &amp; --&gt;
+&lt;!-- \Lambda_x\Phi\Lambda^{\\'}_x+\Theta_\delta --&gt;
+&lt;!-- \end{array}\right) --&gt;
+&lt;!-- \end{aligned} --&gt;
+&lt;!-- $$  --&gt;
 
 ---
 
 # github
-
+----
 - git: 코드 관리 프로그램
 - github: 코드 저장소
 
@@ -151,7 +164,7 @@ lambda %*% pi %*% t(lambda) + theta
 # Functions
 
 ## generate conditions 
-
+----
 .panelset[
 .panel[.panel-name[condition]
 
@@ -175,7 +188,7 @@ makeCondition &lt;- function(n_sample, cov_size, n_indi, cut_size,
     crossing(n_sample, cov_size, n_indi, cut_size) %&gt;%
     mutate(condition_number = row_number())
 
-  if(full)
+* if(full)
     con_list &lt;- 
       crossing(con_list, n_rep = 1:n_rep) %&gt;% 
       arrange(n_rep, condition_number)
@@ -224,7 +237,7 @@ condition_list &lt;-
 ---
 
 ## generate data
-
+----
 .panelset[
 
 .panel[.panel-name[data]
@@ -301,17 +314,17 @@ gen.data &lt;- genData(
 .panel[.panel-name[result]
 
 ```
-##             X1           X2         X3          X4         X5         X6
-## 1   1.30166518  0.008967313 -0.3770648 -0.72636143 -0.2009002  0.6174657
-## 2   0.01515772  0.224622859 -0.7288095  0.97978768  1.2280858  0.8482463
-## 3  -0.27700968 -1.421595743 -0.1925472  0.08772653  0.3609336  0.0402174
-## 4   0.87641052  0.290077669  0.7030843  0.89341303  2.3424498  0.6410129
-## 5  -0.65254189  0.345921120  0.8545919  0.05856623 -1.1989873 -0.4465188
-## 6   2.20981584  0.690340593  1.1613299 -0.53140551  0.5589555 -0.3621907
-## 7  -0.24032737 -1.099941963 -0.3592069  1.60664934  1.0816259  1.3771719
-## 8   1.12591561  1.272108669  0.3008790 -2.51407518 -0.7369097 -1.0288743
-## 9   1.08219078  2.090282887  1.2418866  1.88628774  1.5004839 -1.0355935
-## 10  1.27730006  1.529302521  1.1589131 -0.07536825 -0.2090855 -0.4710454
+##             X1         X2          X3          X4          X5           X6
+## 1  -0.46614343  1.2066446  0.69749317  0.27975582 -0.49650648  0.536252393
+## 2  -1.30525733 -0.8139655 -1.15881538  0.79882155  0.17357007  0.674716752
+## 3  -0.37514443 -0.9615322 -1.35450563 -0.39631345 -0.58539932  0.003529689
+## 4   0.11819402 -0.2376851 -0.13477867  1.42737617 -0.84261001  1.087144407
+## 5  -0.47220869 -0.9226544  0.65373443 -0.48023668 -0.64173512 -0.579049333
+## 6  -0.41477601 -0.5530507 -0.05555732 -3.65589731 -2.91021689 -2.336398602
+## 7   0.44326779 -0.1116956 -0.49759002  1.18211028  1.17167109  0.747443156
+## 8  -0.87458972 -0.5006592 -0.02657142 -0.61124794 -0.08037644  0.424888314
+## 9   0.01465317  0.7915767  1.50394694 -0.04163073  1.54301560  0.800859886
+## 10  1.63191398  2.4168003  1.28120164 -1.61939053 -1.84820571 -0.966148194
 ```
 ]
 ]
@@ -319,7 +332,7 @@ gen.data &lt;- genData(
 ---
 
 ## cut data
-
+----
 .panelset[
 .panel[.panel-name[function]
 
@@ -357,30 +370,30 @@ cut3.data &lt;- dataCut(
 
 ```
 ##    X1 X2 X3 X4 X5 X6
-## 1   4  3  1  3  2  4
-## 2   2  3  1  4  4  4
-## 3   1  1  2  3  3  3
-## 4   3  3  4  4  5  4
-## 5   1  3  5  3  1  2
-## 6   5  4  5  3  3  2
-## 7   1  1  1  5  4  5
-## 8   4  4  3  1  1  1
-## 9   4  5  5  5  4  1
-## 10  4  5  5  3  2  2
+## 1   2  4  4  4  3  5
+## 2   1  1  1  5  4  5
+## 3   2  1  1  4  3  4
+## 4   3  2  3  5  3  5
+## 5   2  1  4  4  3  3
+## 6   2  1  3  1  1  1
+## 7   3  2  2  5  5  5
+## 8   1  1  3  3  4  5
+## 9   3  3  5  4  5  5
+## 10  5  5  5  3  2  3
 ```
 
 ```
 ##    X1 X2 X3 X4 X5 X6
-## 1   3  2  1  2  1  3
-## 2   1  2  1  3  3  3
-## 3   1  1  1  2  2  2
-## 4   2  2  3  3  3  3
-## 5   1  2  3  2  1  1
-## 6   3  2  3  2  2  1
-## 7   1  1  1  3  2  3
-## 8   2  3  2  1  1  1
-## 9   2  3  3  3  3  1
-## 10  3  3  3  2  1  1
+## 1   1  2  3  3  2  3
+## 2   1  1  1  3  3  3
+## 3   1  1  1  2  2  3
+## 4   2  1  2  3  2  3
+## 5   1  1  3  2  2  2
+## 6   1  1  2  1  1  1
+## 7   2  1  1  3  3  3
+## 8   1  1  2  2  2  3
+## 9   2  2  3  3  3  3
+## 10  3  3  3  2  1  2
 ```
 ]
 ]
@@ -389,7 +402,7 @@ cut3.data &lt;- dataCut(
 ---
 
 ## analysis
-
+----
 ### `lavaan` package
 
 .panelset[
@@ -429,7 +442,7 @@ summary(.fit, fit.measures=TRUE)
 ```
 
 ```
-## lavaan 0.6-8 ended normally after 23 iterations
+## lavaan 0.6-8 ended normally after 21 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
@@ -439,36 +452,36 @@ summary(.fit, fit.measures=TRUE)
 ##                                                       
 ## Model Test User Model:
 ##                                                       
-##   Test statistic                                12.238
+##   Test statistic                                 7.852
 ##   Degrees of freedom                                 8
-##   P-value (Chi-square)                           0.141
+##   P-value (Chi-square)                           0.448
 ## 
 ## Model Test Baseline Model:
 ## 
-##   Test statistic                               445.576
+##   Test statistic                               428.847
 ##   Degrees of freedom                                15
 ##   P-value                                        0.000
 ## 
 ## User Model versus Baseline Model:
 ## 
-##   Comparative Fit Index (CFI)                    0.990
-##   Tucker-Lewis Index (TLI)                       0.982
+##   Comparative Fit Index (CFI)                    1.000
+##   Tucker-Lewis Index (TLI)                       1.001
 ## 
 ## Loglikelihood and Information Criteria:
 ## 
-##   Loglikelihood user model (H0)              -1226.934
-##   Loglikelihood unrestricted model (H1)      -1220.815
+##   Loglikelihood user model (H0)              -1214.815
+##   Loglikelihood unrestricted model (H1)      -1210.889
 ##                                                       
-##   Akaike (AIC)                                2479.869
-##   Bayesian (BIC)                              2519.007
-##   Sample-size adjusted Bayesian (BIC)         2477.864
+##   Akaike (AIC)                                2455.630
+##   Bayesian (BIC)                              2494.768
+##   Sample-size adjusted Bayesian (BIC)         2453.626
 ## 
 ## Root Mean Square Error of Approximation:
 ## 
-##   RMSEA                                          0.059
+##   RMSEA                                          0.000
 ##   90 Percent confidence interval - lower         0.000
-##   90 Percent confidence interval - upper         0.122
-##   P-value RMSEA &lt;= 0.05                          0.353
+##   90 Percent confidence interval - upper         0.095
+##   P-value RMSEA &lt;= 0.05                          0.691
 ## 
 ## Standardized Root Mean Square Residual:
 ## 
@@ -484,28 +497,28 @@ summary(.fit, fit.measures=TRUE)
 ##                    Estimate  Std.Err  z-value  P(&gt;|z|)
 ##   F1 =~                                               
 ##     X1                1.000                           
-##     X2                1.190    0.121    9.821    0.000
-##     X3                1.153    0.118    9.782    0.000
+##     X2                0.951    0.106    8.998    0.000
+##     X3                1.109    0.115    9.627    0.000
 ##   F2 =~                                               
 ##     X4                1.000                           
-##     X5                0.968    0.092   10.514    0.000
-##     X6                1.155    0.105   10.969    0.000
+##     X5                0.934    0.088   10.662    0.000
+##     X6                0.902    0.092    9.774    0.000
 ## 
 ## Covariances:
 ##                    Estimate  Std.Err  z-value  P(&gt;|z|)
 ##   F1 ~~                                               
-##     F2                0.322    0.088    3.656    0.000
+##     F2                0.515    0.109    4.732    0.000
 ## 
 ## Variances:
 ##                    Estimate  Std.Err  z-value  P(&gt;|z|)
-##    .X1                0.502    0.081    6.205    0.000
-##    .X2                0.506    0.098    5.148    0.000
-##    .X3                0.501    0.094    5.323    0.000
-##    .X4                0.348    0.069    5.034    0.000
-##    .X5                0.487    0.077    6.288    0.000
-##    .X6                0.503    0.095    5.291    0.000
-##     F1                0.797    0.149    5.333    0.000
-##     F2                0.894    0.149    6.011    0.000
+##    .X1                0.552    0.092    6.025    0.000
+##    .X2                0.595    0.092    6.494    0.000
+##    .X3                0.420    0.093    4.537    0.000
+##    .X4                0.511    0.088    5.789    0.000
+##    .X5                0.293    0.066    4.466    0.000
+##    .X6                0.567    0.085    6.642    0.000
+##     F1                0.877    0.166    5.286    0.000
+##     F2                1.000    0.177    5.656    0.000
 ```
 ]
 ]
@@ -514,7 +527,7 @@ summary(.fit, fit.measures=TRUE)
 ---
 
 ## analysis
-
+----
 .panelset[
 .panel[.panel-name[function]
 
@@ -560,7 +573,7 @@ analysis &lt;- function(.data) {
 .scroll-box-18[
 
 ```
-## lavaan 0.6-8 ended normally after 32 iterations
+## lavaan 0.6-8 ended normally after 26 iterations
 ## 
 ##   Estimator                                         ML
 ##   Optimization method                           NLMINB
@@ -570,40 +583,40 @@ analysis &lt;- function(.data) {
 ##                                                       
 ## Model Test User Model:
 ##                                                       
-##   Test statistic                                14.058
+##   Test statistic                                 9.736
 ##   Degrees of freedom                                 8
-##   P-value (Chi-square)                           0.080
+##   P-value (Chi-square)                           0.284
 ## 
 ## Model Test Baseline Model:
 ## 
-##   Test statistic                                44.604
+##   Test statistic                                46.453
 ##   Degrees of freedom                                15
 ##   P-value                                        0.000
 ## 
 ## User Model versus Baseline Model:
 ## 
-##   Comparative Fit Index (CFI)                    0.795
-##   Tucker-Lewis Index (TLI)                       0.616
+##   Comparative Fit Index (CFI)                    0.945
+##   Tucker-Lewis Index (TLI)                       0.897
 ## 
 ## Loglikelihood and Information Criteria:
 ## 
-##   Loglikelihood user model (H0)                -88.327
-##   Loglikelihood unrestricted model (H1)        -81.298
+##   Loglikelihood user model (H0)                -80.098
+##   Loglikelihood unrestricted model (H1)        -75.230
 ##                                                       
-##   Akaike (AIC)                                 202.654
-##   Bayesian (BIC)                               206.588
-##   Sample-size adjusted Bayesian (BIC)          167.643
+##   Akaike (AIC)                                 186.196
+##   Bayesian (BIC)                               190.130
+##   Sample-size adjusted Bayesian (BIC)          151.185
 ## 
 ## Root Mean Square Error of Approximation:
 ## 
-##   RMSEA                                          0.275
+##   RMSEA                                          0.147
 ##   90 Percent confidence interval - lower         0.000
-##   90 Percent confidence interval - upper         0.507
-##   P-value RMSEA &lt;= 0.05                          0.089
+##   90 Percent confidence interval - upper         0.417
+##   P-value RMSEA &lt;= 0.05                          0.302
 ## 
 ## Standardized Root Mean Square Residual:
 ## 
-##   SRMR                                           0.211
+##   SRMR                                           0.113
 ## 
 ## Parameter Estimates:
 ## 
@@ -615,28 +628,28 @@ analysis &lt;- function(.data) {
 ##                    Estimate  Std.Err  z-value  P(&gt;|z|)
 ##   F1 =~                                               
 ##     X1                1.000                           
-##     X2                1.453    0.632    2.298    0.022
-##     X3                1.029    0.472    2.181    0.029
+##     X2                1.528    0.572    2.671    0.008
+##     X3                1.113    0.466    2.390    0.017
 ##   F2 =~                                               
 ##     X4                1.000                           
-##     X5                1.296    0.522    2.483    0.013
-##     X6                0.800    0.434    1.841    0.066
+##     X5                1.041    0.318    3.270    0.001
+##     X6                1.328    0.361    3.675    0.000
 ## 
 ## Covariances:
 ##                    Estimate  Std.Err  z-value  P(&gt;|z|)
 ##   F1 ~~                                               
-##     F2               -0.211    0.310   -0.682    0.495
+##     F2                0.034    0.277    0.124    0.901
 ## 
 ## Variances:
 ##                    Estimate  Std.Err  z-value  P(&gt;|z|)
-##    .X1                1.040    0.560    1.858    0.063
-##    .X2               -0.456    0.705   -0.647    0.518
-##    .X3                1.849    0.884    2.091    0.036
-##    .X4                0.366    0.335    1.095    0.274
-##    .X5                0.224    0.499    0.448    0.654
-##    .X6                1.202    0.572    2.100    0.036
-##     F1                1.050    0.869    1.209    0.227
-##     F2                0.874    0.605    1.444    0.149
+##    .X1                0.481    0.299    1.609    0.108
+##    .X2                0.116    0.487    0.239    0.811
+##    .X3                0.950    0.496    1.914    0.056
+##    .X4                0.441    0.243    1.816    0.069
+##    .X5                0.415    0.241    1.722    0.085
+##    .X6                0.069    0.252    0.274    0.784
+##     F1                0.759    0.552    1.377    0.169
+##     F2                0.919    0.593    1.551    0.121
 ```
 ]
 ]
@@ -645,7 +658,7 @@ analysis &lt;- function(.data) {
 ---
 
 ## extractEst
-
+----
 .panelset[
 .panel[.panel-name[function]
 
@@ -675,14 +688,14 @@ extracted &lt;- extractEst(.fit)
 .scroll-box-18[
 
 ```
-##     type    est pvalue
-## 1 F1=~X2  1.453  0.022
-## 2 F1=~X3  1.029  0.029
-## 3 F2=~X5  1.296  0.013
-## 4 F2=~X6  0.800  0.066
-## 5 F1~~F2 -0.211  0.495
-## 6 F1~~F1  1.050  0.227
-## 7 F2~~F2  0.874  0.149
+##     type   est pvalue
+## 1 F1=~X2 1.528  0.008
+## 2 F1=~X3 1.113  0.017
+## 3 F2=~X5 1.041  0.001
+## 4 F2=~X6 1.328  0.000
+## 5 F1~~F2 0.034  0.901
+## 6 F1~~F1 0.759  0.169
+## 7 F2~~F2 0.919  0.121
 ```
 ]
 ]
@@ -691,7 +704,7 @@ extracted &lt;- extractEst(.fit)
 ---
 
 ## run simulation 
-
+----
 .panelset[
 .panel[.panel-name[function]
 
@@ -22973,7 +22986,7 @@ sim_result &lt;- runSimulation(condition_list)
 ---
 
 ## calculate outcomes
-
+----
 .panelset[
 
 .panel[.panel-name[outcome]
@@ -22983,7 +22996,7 @@ sim_result &lt;- runSimulation(condition_list)
 `$$\text{RMSE=}\sqrt{\sum(\hat{\theta}-\theta)^2/N}$$`
 
 ## Power &amp; Type I error
-
+----
 - Type I error: when covariance = 0, the replications of being significant / total replication
 - Power: when covariance = 0.5, the replications of being significant / total replication
 
@@ -23075,7 +23088,7 @@ bias_res &lt;- getAccuracy(sim_result)
 ---
 
 ## plot
-
+----
 .panelset[
 .panel[.panel-name[function]
 
@@ -23132,38 +23145,60 @@ makePlot &lt;- function(results, what = "RMSE", font_size = 14, point_size = 2, 
 .panel[.panel-name[code]
 
 ```r
-rmse_p &lt;- makePlot(bias_res, what = "RMSE", font_size = 12)
-bias_p &lt;- makePlot(bias_res, what = "Bias", font_size = 12)
-power_p &lt;- makePlot(power_res, what = "power", font_size = 12)
-typeierror_p &lt;- makePlot(power_res, what = "typeIerror", font_size = 12)
+rmse_p &lt;- makePlot(bias_res, what = "RMSE", font_size = 24,point_size = 4)
+bias_p &lt;- makePlot(bias_res, what = "Bias", font_size = 24,point_size = 4)
+power_p &lt;- makePlot(power_res, what = "power", font_size = 22,point_size = 3)
+typeierror_p &lt;- makePlot(power_res, what = "typeIerror", font_size = 22,point_size = 3)
 ```
 ]
 
 ]
 
 ---
-# Power
+
+# outcome
+----
 
 
+.pull-left[
+## Power
+&lt;img src="xaringan_presentation_files/figure-html/unnamed-chunk-30-1.png" width="504" /&gt;
+]
 
-&lt;img src="xaringan_presentation_files/figure-html/unnamed-chunk-30-1.png" width="80%" height="30%" /&gt;
+.pull-right[
 
-
+## Type I error
+&lt;img src="xaringan_presentation_files/figure-html/unnamed-chunk-31-1.png" width="504" /&gt;
+]
 
 ---
-# Accuracy
 
-.scroll-box-20[
-&lt;img src="xaringan_presentation_files/figure-html/unnamed-chunk-31-1.png" width="100%" height="30%" /&gt;
-]
+# outcome
+----
+
+## RMSE
+&lt;img src="xaringan_presentation_files/figure-html/unnamed-chunk-32-1.png" width="1008" /&gt;
+
+---
+
+# outcome
+----
+## Bias
+&lt;img src="xaringan_presentation_files/figure-html/unnamed-chunk-33-1.png" width="1008" /&gt;
 
 
 ---
 
 # push to github
-
+----
 - commit -&gt; push (how to use branch?)
 - install package
+  
+
+
+```r
+*devtools::install_github("sooyongl09/trySimulation")
+```
 
 
 ---

@@ -161,6 +161,19 @@ lambda %*% pi %*% t(lambda) + theta
 
 ]
 
+<!-- $$ -->
+<!-- \begin{aligned} -->
+<!-- \Sigma &= \left(\begin{array}{cc}  -->
+<!-- \Sigma_{yy} & sym\\ -->
+<!-- \Sigma_{xy} & \Sigma_{xx} -->
+<!-- \end{array}\right) \\ -->
+<!-- &= \left(\begin{array}{cc}  -->
+<!-- \Lambda_y(I-B)^{-1}(\Gamma\Phi\Gamma^{\\'}+\Psi)(I-B)^{\\'-1}\Lambda_y + \Theta_\epsilon & \Lambda_y(I-B)^{-1}\Gamma\Phi\Lambda^{\\'}\\ -->
+<!-- \Lambda_x\Phi\Gamma^{\\'}(I-B)^{-1}\Lambda^{\\'}_y & -->
+<!-- \Lambda_x\Phi\Lambda^{\\'}_x+\Theta_\delta -->
+<!-- \end{array}\right) -->
+<!-- \end{aligned} -->
+<!-- $$  -->
 
 ---
 
@@ -197,7 +210,7 @@ makeCondition <- function(n_sample, cov_size, n_indi, cut_size,
     crossing(n_sample, cov_size, n_indi, cut_size) %>%
     mutate(condition_number = row_number())
 
-  if(full)
+  if(full) #<<
     con_list <- 
       crossing(con_list, n_rep = 1:n_rep) %>% 
       arrange(n_rep, condition_number)
@@ -663,17 +676,19 @@ makePlot <- function(results, what = "RMSE", font_size = 14, point_size = 2, alp
 
 .panel[.panel-name[code]
 ```{r }
-rmse_p <- makePlot(bias_res, what = "RMSE", font_size = 12)
-bias_p <- makePlot(bias_res, what = "Bias", font_size = 12)
-power_p <- makePlot(power_res, what = "power", font_size = 12)
-typeierror_p <- makePlot(power_res, what = "typeIerror", font_size = 12)
+rmse_p <- makePlot(bias_res, what = "RMSE", font_size = 24,point_size = 4)
+bias_p <- makePlot(bias_res, what = "Bias", font_size = 24,point_size = 4)
+power_p <- makePlot(power_res, what = "power", font_size = 24,point_size = 3)
+typeierror_p <- makePlot(power_res, what = "typeIerror", font_size = 24,point_size = 3)
 ```
 ]
 
 ]
 
 ---
-# Power
+
+# outcome
+----
 ```{r echo=FALSE}
 te_p <- typeierror_p + labs(title = "Type I error", y = "Type I error")
 power_p <- power_p  + labs(title = "Power", y = "Power")
@@ -681,35 +696,52 @@ rmse_p <- rmse_p + labs(title = "RMSE")
 bias_p <- bias_p + geom_hline(yintercept = 0, size = 1.2, alpha = 0.8, linetype = "dotted")+ labs(title = "Bias")
 ```
 
-
-```{r echo=FALSE , out.height='30%', out.width='80%'}
-ggpubr::ggarrange(te_p, power_p,
-                  ncol = 2, nrow = 1,
-                  common.legend = T)
-
-```
-
-
-
----
-# Accuracy
-
-.scroll-box-20[
-```{r echo=FALSE, out.height='30%', out.width='100%'}
-ggpubr::ggarrange(rmse_p, bias_p,
-                  ncol = 2, nrow = 1,
-                  common.legend = T)
-
+.pull-left[
+## Power
+```{r echo=FALSE}
+power_p
 ```
 ]
+
+.pull-right[
+
+## Type I error
+```{r echo=FALSE}
+te_p
+```
+]
+
+---
+
+# outcome
+----
+
+## RMSE
+```{r echo=FALSE, fig.height=7, fig.width=14}
+rmse_p
+```
+
+---
+
+# outcome
+----
+## Bias
+```{r echo=FALSE, fig.height=7, fig.width=14}
+bias_p
+```
 
 
 ---
 
 # push to github
-
+----
 - commit -> push (how to use branch?)
 - install package
+  
+
+```{r echo=T, eval=F, include = T}
+devtools::install_github("sooyongl09/trySimulation") #<<
+```
 
 
 ---
