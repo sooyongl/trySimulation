@@ -19,7 +19,7 @@ analysis <- function(.data) {
       F1 ~~ F2
   ')
 
-  .fit <- lavaan::sem(model = .model,
+  .fit <- sem(model = .model,
                       data  = .data )
 
   # summary(.fit)

@@ -93,7 +93,7 @@ class: title-slide, center, middle
 # git(hub)
 ----
 - git: code 관리 프로그램
-- github: code 업로드드
+- github: code 클라우드
 - commit / push / pull
 
 ---
@@ -153,9 +153,9 @@ $$\Sigma = Cov(X) = \Lambda \Phi \Lambda^T + \Theta$$
 ```{r}
 theta <- diag(0.5, 6)
 lambda <- matrix(c(1,1,1,0,0,0,0,0,0,1,1,1), ncol = 2)
-pi <- matrix(c(1,0.5, 0.5, 1), ncol = 2)
+phi <- matrix(c(1,0.5, 0.5, 1), ncol = 2)
 
-lambda %*% pi %*% t(lambda) + theta
+lambda %*% phi %*% t(lambda) + theta
 ```
 
 
@@ -177,10 +177,15 @@ lambda %*% pi %*% t(lambda) + theta
 
 ---
 
-# github
+# Simulation Materials
 ----
-- git: 코드 관리 프로그램
-- github: 코드 저장소
+- ~~study topic~~
+- ~~population model~~
+- condition; 시뮬레이션 조건 함수
+- data generation; 데이터 생성 함수
+- analysis; 분석 함수
+- estimate cleaning; 정리 함수
+- report; 그래프, 표...
 
 ---
 
@@ -191,6 +196,7 @@ lambda %*% pi %*% t(lambda) + theta
 .panelset[
 .panel[.panel-name[condition]
 
+.pull-left-wide[
 - sample size: **100, 500**
 - number of indicators per factor: **3, 6**
 - covaraince between factors: **0, 0.5**
@@ -198,6 +204,19 @@ lambda %*% pi %*% t(lambda) + theta
   - cov = 0.5인 경우 유의하면 -> power
 - categorization: **3, 5, 7**
 - all other things are fixed
+]
+
+.pull-right-narrow[
+
+- total number of condition
+  - 2 * 2 * 2 * 3 = 24
+- number of replications
+  - 100
+  
+- total number of data 
+  - 24 * 100 = 2400
+
+]
 
 ]
 
@@ -542,7 +561,7 @@ sim_result <- runSimulation(condition_list)
 .scroll-box-18[
 ```{r echo=FALSE}
 sim_result <- readRDS(file.path(root, ".test","sim_result.rds"))
-sim_result
+sim_result %>% mutate_at(vars(est, pvalue), round, 3)
 ```
 ]
 ]
@@ -561,7 +580,7 @@ $$\text{Bias=}\sum(\hat{\theta}-\theta)/N$$
 $$\text{RMSE=}\sqrt{\sum(\hat{\theta}-\theta)^2/N}$$
 
 ## Power & Type I error
-----
+
 - Type I error: when covariance = 0, the replications of being significant / total replication
 - Power: when covariance = 0.5, the replications of being significant / total replication
 
@@ -730,6 +749,31 @@ rmse_p
 bias_p
 ```
 
+
+---
+
+# documentation
+----
+
+- roxyzen2
+- `#'`
+- Rd 생성 in man folder
+- 이게 나중에 패키지 설명으로 자동으로 렌더링 됨.
+- CRAN 에 올리려면 vignettes(패키지 설명서)를 R 규정에 맞게 써야 함
+
+---
+
+# import other package
+
+- #' @import lavaan
+- #' @import dplyr
+- #' @import ggplot2
+- #' @import tidyr
+- #' @import purrr
+- #' @import stringr
+- #' @importFrom MASS mvrnorm
+- #' @importFrom glue glue
+- #' @importFrom magrittr %>%
 
 ---
 
