@@ -1,0 +1,11 @@
+
+
+data: file is test_data.dat;
+variable: names are v1-v8;
+
+model:
+  F1 by v1-v4;
+  F2 by v5-v8;
+  F1 with F2;
+
+

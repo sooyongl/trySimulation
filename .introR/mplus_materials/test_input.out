@@ -1,0 +1,199 @@
+Mplus VERSION 8.3
+MUTHEN & MUTHEN
+05/13/2021   7:19 PM
+
+INPUT INSTRUCTIONS
+
+
+
+  data: file is test_data.dat;
+  variable: names are v1-v8;
+
+  model:
+    F1 by v1-v4;
+    F2 by v5-v8;
+    F1 with F2;
+
+
+
+
+
+   1 ERROR(S) FOUND IN THE INPUT INSTRUCTIONS
+
+
+
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                         100
+
+Number of dependent variables                                    8
+Number of independent variables                                  0
+Number of continuous latent variables                            2
+
+Observed dependent variables
+
+  Continuous
+   V1          V2          V3          V4          V5          V6
+   V7          V8
+
+Continuous latent variables
+   F1          F2
+
+
+Estimator                                                       ML
+Information matrix                                        OBSERVED
+Maximum number of iterations                                  1000
+Convergence criterion                                    0.500D-04
+Maximum number of steepest descent iterations                   20
+
+Input data file(s)
+  test_data.dat
+
+Input data format  FREE
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     V1                    0.018       0.077      -3.013    1.00%      -1.035     -0.291      0.044
+             100.000       1.353      -0.177       3.065    1.00%       0.259      0.978
+     V2                   -0.065      -0.175      -3.791    1.00%      -0.995     -0.448     -0.221
+             100.000       1.453      -0.094       2.630    1.00%       0.173      1.001
+     V3                    0.195      -0.357      -2.591    1.00%      -0.687     -0.127      0.232
+             100.000       1.307      -0.378       2.753    1.00%       0.634      1.096
+     V4                    0.063      -0.125      -4.315    1.00%      -0.968     -0.251      0.169
+             100.000       1.305       1.503       2.872    1.00%       0.357      0.797
+     V5                   -0.118      -0.220      -3.375    1.00%      -1.198     -0.436     -0.128
+             100.000       1.349      -0.490       2.120    1.00%       0.195      0.981
+     V6                   -0.150       0.092      -2.414    1.00%      -1.096     -0.475     -0.257
+             100.000       1.142      -0.513       2.352    1.00%      -0.083      0.828
+     V7                   -0.120      -0.211      -2.945    1.00%      -1.361     -0.510     -0.092
+             100.000       1.778      -0.634       2.753    1.00%       0.329      1.037
+     V8                   -0.154      -0.329      -3.195    1.00%      -1.263     -0.364     -0.091
+             100.000       1.501      -0.452       2.288    1.00%       0.234      0.958
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                       25
+
+Loglikelihood
+
+          H0 Value                       -1059.237
+          H1 Value                       -1050.079
+
+Information Criteria
+
+          Akaike (AIC)                    2168.474
+          Bayesian (BIC)                  2233.603
+          Sample-Size Adjusted BIC        2154.647
+            (n* = (n + 2) / 24)
+
+Chi-Square Test of Model Fit
+
+          Value                             18.316
+          Degrees of Freedom                    19
+          P-Value                           0.5014
+
+RMSEA (Root Mean Square Error Of Approximation)
+
+          Estimate                           0.000
+          90 Percent C.I.                    0.000  0.084
+          Probability RMSEA <= .05           0.750
+
+CFI/TLI
+
+          CFI                                1.000
+          TLI                                1.002
+
+Chi-Square Test of Model Fit for the Baseline Model
+
+          Value                            432.503
+          Degrees of Freedom                    28
+          P-Value                           0.0000
+
+SRMR (Standardized Root Mean Square Residual)
+
+          Value                              0.034
+
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ F1       BY
+    V1                 1.000      0.000    999.000    999.000
+    V2                 1.122      0.149      7.520      0.000
+    V3                 1.097      0.139      7.872      0.000
+    V4                 1.059      0.140      7.583      0.000
+
+ F2       BY
+    V5                 1.000      0.000    999.000    999.000
+    V6                 0.876      0.100      8.732      0.000
+    V7                 1.135      0.123      9.262      0.000
+    V8                 1.031      0.113      9.155      0.000
+
+ F1       WITH
+    F2                 0.186      0.099      1.884      0.060
+
+ Intercepts
+    V1                 0.018      0.116      0.151      0.880
+    V2                -0.065      0.121     -0.540      0.589
+    V3                 0.195      0.114      1.703      0.089
+    V4                 0.063      0.114      0.554      0.579
+    V5                -0.118      0.116     -1.016      0.310
+    V6                -0.150      0.107     -1.407      0.159
+    V7                -0.120      0.133     -0.903      0.366
+    V8                -0.154      0.123     -1.259      0.208
+
+ Variances
+    F1                 0.741      0.181      4.093      0.000
+    F2                 0.934      0.191      4.895      0.000
+
+ Residual Variances
+    V1                 0.611      0.106      5.787      0.000
+    V2                 0.520      0.101      5.137      0.000
+    V3                 0.415      0.087      4.749      0.000
+    V4                 0.474      0.091      5.185      0.000
+    V5                 0.415      0.083      4.989      0.000
+    V6                 0.424      0.077      5.512      0.000
+    V7                 0.574      0.112      5.116      0.000
+    V8                 0.507      0.097      5.253      0.000
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.605E-01
+       (ratio of smallest to largest eigenvalue)
+
+
+     Beginning Time:  19:19:51
+        Ending Time:  19:19:51
+       Elapsed Time:  00:00:00
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2019 Muthen & Muthen
