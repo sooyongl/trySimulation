@@ -7,6 +7,7 @@ output:
       highlightLines: true
       countIncrementalSlides: false
       ratio: "16:9"
+    self_contained: true
     seal: false  
 ---
 ```{r setup, include=FALSE}
@@ -31,7 +32,7 @@ library(xaringan)
 library(flipbookr)
 library(xaringanExtra)
 library(trySimulation)
-
+library(lavaan)
 
 xaringanExtra::use_tile_view()
 xaringanExtra::use_panelset()
@@ -429,8 +430,7 @@ summary(.fit, fit.measures=TRUE)
 .panel[.panel-name[function]
 
 .scroll-box-18[
-```{r eval=FALSE, include=T}
-library(lavaan)
+```{r }
 analysis <- function(.data) {
 
   n_indi <- dim(.data)[2]/2
@@ -481,8 +481,8 @@ summary(.fit, fit.measures=TRUE)
 .panel[.panel-name[function]
 
 .scroll-box-18[
-```{r eval=FALSE, include=T}
-library(lavaan)
+```{r }
+
 extractEst <- function(.fit) {
   parameterestimates(.fit) %>%
     filter(str_detect(op, "=~") | str_detect(lhs, "F1|F2")) %>%
@@ -763,15 +763,15 @@ bias_p
 
 # import other package
 
-- #' @import lavaan
-- #' @import dplyr
-- #' @import ggplot2
-- #' @import tidyr
-- #' @import purrr
-- #' @import stringr
-- #' @importFrom MASS mvrnorm
-- #' @importFrom glue glue
-- #' @importFrom magrittr %>%
+- \#' @import lavaan
+- \#' @import dplyr
+- \#' @import ggplot2
+- \#' @import tidyr
+- \#' @import purrr
+- \#' @import stringr
+- \#' @importFrom MASS mvrnorm
+- \#' @importFrom glue glue
+- \#' @importFrom magrittr %>%
 
 ---
 
