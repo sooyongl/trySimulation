@@ -209,12 +209,10 @@ lambda %*% phi %*% t(lambda) + theta
 .pull-right-narrow[
 
 - total number of condition
-  - 2 * 2 * 2 * 3 = 24
-- number of replications
-  - 100
+  - 2 x 2 x 2 x 3 = 24
+- number of replications: 100
   
-- total number of data 
-  - 24 * 100 = 2400
+- total number of data: 24 * 100 = 2400
 
 ]
 
