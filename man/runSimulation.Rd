@@ -4,7 +4,7 @@
 \alias{runSimulation}
 \title{run simulation}
 \usage{
-runSimulation(condition_full)
+runSimulation(condition_full, seed = 1)
 }
 \description{
 run simulation

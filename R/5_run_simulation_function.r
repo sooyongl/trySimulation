@@ -2,7 +2,7 @@
 #' @examples
 #' sim_result <- runSimulation(condition_list)
 #' @export
-runSimulation <- function(condition_full) {
+runSimulation <- function(condition_full, seed = 1) {
 
   total_n <- dim(condition_full)[1]
 
@@ -16,6 +16,7 @@ runSimulation <- function(condition_full) {
     condition_number <- condition_full$condition_number[tn]
     n_rep            <- condition_full$n_rep[tn]
 
+    set.seed(seed + n_rep + condition_number)
     original.data <- genData(N = n_sample, cov_size = cov_size, n_indi = n_indi)
     cut.data <- dataCut(original.data, cut_size)
 
