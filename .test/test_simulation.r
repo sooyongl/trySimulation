@@ -1,6 +1,6 @@
 devtools::install_github("https://github.com/sooyongl/trySimulation")
-library(trySimulation); library(tidyverse); library(MASS)
-library(lavaan); library(glue)
+library(trySimulation);
+# library(tidyverse); library(MASS);library(lavaan); library(glue)
 
 # for(source.function in list.files("R") { source(source.function)})
 
