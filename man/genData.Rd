@@ -10,5 +10,5 @@ genData(N, cov_size, n_indi)
 generate data
 }
 \examples{
-gen.data <- genData(N = 100, cov_size = 0, n_indi = 3)
+gen.data <- genData(N = 100, cov_size = 0.5, n_indi = 10)
 }

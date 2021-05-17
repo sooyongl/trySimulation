@@ -1,6 +1,6 @@
 #' cut data
 #' @examples
-#' cut5.data <- dataCut(gen.data, cut_size = 3)
+#' cut5.data <- dataCut(gen.data, cut_size = 5)
 #' @export
 dataCut <- function(.data, cut_size) {
 

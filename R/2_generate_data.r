@@ -1,6 +1,6 @@
 #' generate data
 #' @examples
-#' gen.data <- genData(N = 100, cov_size = 0, n_indi = 3)
+#' gen.data <- genData(N = 100, cov_size = 0.5, n_indi = 10)
 #' @export
 genData <- function(N, cov_size, n_indi) {
 
@@ -32,7 +32,12 @@ genData <- function(N, cov_size, n_indi) {
 
   mean_vector <- rep(0, n_indi*2)
 
-  g.data <- mvrnorm(N, mean_vector, Sigma = model_impled)
+  g.data <-
+    mvrnorm(
+      n = N,
+      mu = mean_vector,
+      Sigma = model_impled
+      )
   g.data <- data.frame(g.data)
   return(g.data)
 }

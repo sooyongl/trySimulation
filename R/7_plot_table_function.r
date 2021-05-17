@@ -4,7 +4,7 @@
 #' makePlot(power_res, what = "power", font_size = 12)
 #' makePlot(power_res, what = "typeIerror", font_size = 12)
 #' @export
-makePlot <- function(results, what = "RMSE", font_size = 14, point_size = 2, alpha = 1) {
+makePlot <- function(results, what = "Bias", font_size = 14, point_size = 2, alpha = 1) {
 
   theme_set(theme_bw(base_size = font_size))
 

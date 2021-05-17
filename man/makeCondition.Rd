@@ -4,7 +4,7 @@
 \alias{makeCondition}
 \title{Generation a condition table}
 \usage{
-makeCondition(n_sample, cov_size, n_indi, cut_size, n_rep, full = T)
+makeCondition(n_sample, cov_size, n_indi, cut_size, n_rep = 10, full = T)
 }
 \arguments{
 \item{n_sample}{a integer vector indicating total sample sizes.}
@@ -24,5 +24,5 @@ a data frame containing the conditions.
 \code{\link{makeCondition}} returns a condition table
 }
 \examples{
-makeCondition(n_sample = c(500), cov_size = c(0, 0.5), n_indi = c(3, 6), cut_size = c(5,7), full = F)
+condition_list <- makeCondition(n_sample = c(500), cov_size = c(0, 0.5), n_indi = c(3, 6), cut_size = c(5,7), full = T)
 }
