@@ -25,3 +25,4 @@ library(trySimulation)
 # Introduction
 
 ## Functions
+

@@ -789,6 +789,18 @@ devtools::install_github("sooyongl09/trySimulation") #<<
 ---
 
 # Run simulation
+----
+
+
+---
+# what's more
+----
+- working with _mplus_
+- parallel computing
+- class / method
+- shiny app
+- estimator
+- data cleaning
 
 
 

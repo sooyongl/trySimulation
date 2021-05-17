@@ -10,5 +10,5 @@ dataCut(.data, cut_size)
 cut data
 }
 \examples{
-cut5.data <- dataCut(gen.data, cut_size = 3)
+cut5.data <- dataCut(gen.data, cut_size = 5)
 }

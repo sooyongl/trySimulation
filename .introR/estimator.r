@@ -67,9 +67,23 @@ cov(X)
 
 starting_pars <-
   c(lmean_inp = c(0, 0),
+    phi_inp = c(1, 0, .1),
+    error_inp = 0.5
+  )
+optim.out <-
+  optim(par = starting_pars,
+        fn = ll_multN,
+        X = X,
+        hessian = T,
+        method = "L-BFGS-B",
+        lower = -Inf,
+        upper = Inf)
+
+starting_pars <-
+  c(lmean_inp = c(0, 0),
     phi_inp = c(1, 0, 1),
     error_inp = 0.5
-    )
+  )
 
 nlminb.out <-
   nlminb(start = starting_pars,
@@ -78,19 +92,20 @@ nlminb.out <-
          # gradient=GRADIENT,
          lower = -Inf,
          upper = Inf)
-
-optim.out <-
-  optim(par = starting_pars,
-        fn = ll_multN,
-        X = X,
-        method = "L-BFGS-B",
-        lower = -Inf,
-        upper = Inf)
+# hessian_est <- numDeriv::hessian(func = ll_multN, theta = starting_pars, x = X)
 
 # Standard Errors
 
-hessian <- function(Y, nlminb.out) {
+#
+fisher_info <- solve(optim.out$hessian)
+prop_sigma <- sqrt(diag(fisher_info))
+upper <- optim.out$par+1.96*prop_sigma
+lower <- optim.out$par-1.96*prop_sigma
 
+
+#
+my.hessian <- function(Y, nlminb.out) {
+  # Y <- X; nlminb.out <- nlminb.out$par
   # construct model-implied covariance and mean vector
   theta <- nlminb.out
   lmeans <- grepl("lmean", names(theta))
@@ -116,14 +131,14 @@ hessian <- function(Y, nlminb.out) {
 
   if (!is.matrix(Y)) Y <- as.matrix(Y)
   # Create Matrices
-  invS <- solve(Sigma)
-  Ym <- sweep(as.matrix(Y), 2, mu) # Y - matrix(1,nrow(Y)) %*% mu
+  inv_sig <- solve(Sigma)
+  Y_residual <- Y - matrix(1,nrow(Y)) %*% mu # sweep(as.matrix(Y), 2, mu)
   d <- Dn(ncol(Y))
   # Create second derivatives
   d2m <- -nrow(Y)*solve(Sigma)
-  d2s <- -t(d) %*%  (invS %x% ( invS %*% crossprod(Ym) %*%
-                                  invS  - .5*nrow(Y)*invS )) %*% d
-  d2ms <- - t(invS %x% colSums(Ym %*% invS) )  %*% d
+  d2s <- -t(d) %*%  (inv_sig %x% ( inv_sig %*% crossprod(Y_residual) %*%
+                                     inv_sig  - .5*nrow(Y)*inv_sig )) %*% d
+  d2ms <- - t(inv_sig %x% colSums(Y_residual %*% inv_sig) )  %*% d
   # Compute Hessian
   rbind(cbind(d2m,d2ms), cbind(t(d2ms),d2s))
 }
@@ -137,5 +152,8 @@ Dn <- function(n){
   return(mat)
 }
 
-hessian_est <- hessian(X, nlminb.out$par)
+hessian_est <- my.hessian(X, p$par)
 SE_est <- sqrt(diag(solve(-hessian_est)))
+
+
+
