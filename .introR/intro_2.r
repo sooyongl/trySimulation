@@ -18,6 +18,9 @@ dataframe_b[dataframe_b$gender == "female" & dataframe_b$scores > 80, ]
 
 dataframe_b$pass <- dataframe_b$scores > 80
 
+# dataframe_b$pass[dataframe_b$pass == TRUE] <- "pass"
+# dataframe_b$pass[dataframe_b$pass == FALSE] <- "fail"
+
 # if
 
 if(dataframe_b$scores[1] > 80) {
@@ -33,6 +36,7 @@ if(dataframe_b$scores[1] > 80) {
 # for
 for(i in 1:dim(dataframe_b)[1]) {
 
+  # i = 1
   if(dataframe_b$scores[i] > 80) {
 
     pass <- "pass"
@@ -67,8 +71,26 @@ for(i in 1:dim(female_dat)[1]) {
 }
 female_dat
 
+male_dat <- dataframe_b[dataframe_b$gender == "male", ]
+for(i in 1:dim(male_dat)[1]) {
+
+  if(male_dat$scores[i] > 75) {
+
+    pass <- "pass"
+
+  } else {
+
+    pass <- "fail"
+
+  }
+
+  male_dat$pass[i] <-  pass
+
+}
+male_dat
+
 filter_pass <- function(mydata, gender, cut_score) {
-  filtered_dat <- mydata[dataframe_b$gender == gender, ]
+  filtered_dat <- mydata[mydata$gender == gender, ]
   for(i in 1:dim(filtered_dat)[1]) {
 
     if(filtered_dat$scores[i] > cut_score) {
