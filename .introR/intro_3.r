@@ -17,6 +17,15 @@ write_csv(my.data, ".introR/data/KCYPS2010 m1w1.csv")
 # DAT
 write_tsv(my.data, ".introR/data/KCYPS2010 m1w1.dat", col_names = F)
 
+# multiple
+file_list <- fs::dir_ls(".introR/data")
+xlsx_file <- file_list[str_detect(file_list, "xlsx")]
+for(i in 1:length(xlsx_file)) {
+  data0 <- readxl::read_xlsx(xlsx_file[i])
+  write_csv(data0, paste0(".introR/data/data_w", i, ".csv"))
+}
+
+
 # read.csv
 my.data <- read_csv(".introR/data/KCYPS2010 m1w1.csv")
 # read_delim(".introR/data/KCYPS2010 m1w1.dat", delim = "\t", col_names = F)
@@ -232,6 +241,84 @@ write_csv(data_w1_v1, "data_w1_v1.csv")
 
 # Read the data ----------------------------------------
 read_csv("data_w1_v1.csv")
+
+
+# Multiple data
+file_list <- fs::dir_ls(".introR/data")
+data_list <- file_list[str_detect(file_list, "xlsx")]
+
+data_container <- list()
+for(i in 1:length(data_list)) {
+  # i <- 2
+  data_w <- readxl::read_excel(data_list[i])
+  # names(data_w)
+
+  varName <- paste0("mean_selfes_w",i)
+
+  data_w <-
+    data_w %>%
+    select(ID,
+           starts_with("GENDER"),
+           starts_with("PSY2A")) %>%
+    rename_at(vars(contains('PSY2A')), ~(sub('PSY2A', 'selfes_', .))) %>%
+    rename_at(vars(contains('Gender')), ~(sub(., 'Gender', .))) %>%
+    na_if(., -9) %>%
+    mutate(
+      !!varName := rowMeans(select(., contains("selfes_")), na.rm = T)
+    ) %>%
+    select(ID, Gender, matches("^mean_")) %>%
+    mutate(Gender = case_when(Gender == 1 ~ "Girl", TRUE ~ "Boy"))
+
+  data_container[[i]] <- data_w
+}
+
+# Merge data
+merged <-
+  data_container[[1]] %>%
+  left_join(., data_container[[2]], by = "ID") %>%
+  left_join(data_container[[3]], by = "ID") %>%
+  left_join(data_container[[4]], by = "ID") %>%
+  left_join(data_container[[5]], by = "ID") %>%
+  left_join(data_container[[6]], by = "ID") %>%
+  left_join(data_container[[7]], by = "ID") %>%
+  select(-contains("Gender")) %>%
+  left_join(., data_container[[1]][,c("ID","Gender")], by = "ID") %>%
+  select(ID, Gender, everything())
+
+names(merged) <- c("ID", "gen",paste0("w",1:7))
+
+
+# test SEM
+library(lavaan)
+# girl.merged <- merged %>% filter(Gender == "Girl")
+model = '
+
+  I =~ 1*mean_selfes_w1 + 1*mean_selfes_w3 + 1*mean_selfes_w5 + 1*mean_selfes_w6 + 1*mean_selfes_w7
+  S =~ 0*mean_selfes_w1 + 2*mean_selfes_w3 + 4*mean_selfes_w5 + 5*mean_selfes_w6 + 6*mean_selfes_w7
+
+  #I ~ Gender
+  #S ~ Gender
+
+'
+fit <- lavaan::growth(model = model,
+                   data = merged)
+
+summary(fit, fit.measures=TRUE)
+
+latent <- parameterestimates(fit) %>%
+  filter(lhs %in% c("I","S"), op == "~1") %>%
+  pull(est)
+
+tibble(timepoint = 0:6, estimated = timepoint * latent[2] + latent[1]) %>%
+  ggplot(aes(x = timepoint, y = estimated)) +
+  geom_line(aes(group = 1)) +
+  geom_point() +
+  geom_text(aes(label = round(estimated, 2)),
+            vjust = -1) +
+  scale_y_continuous(limits = c(1, 5)) +
+  theme_bw(base_size = 14)
+
+
 
 
 # Additional stuffs...
