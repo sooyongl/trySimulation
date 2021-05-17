@@ -218,6 +218,7 @@ data_w1_1 %>%
 
 data_w1 <- my.data
 
+
 data_w1_v1 <-
   data_w1 %>%
   select(ID,
@@ -249,7 +250,7 @@ data_list <- file_list[str_detect(file_list, "xlsx")]
 
 data_container <- list()
 for(i in 1:length(data_list)) {
-  # i <- 2
+  # i <- 1
   data_w <- readxl::read_excel(data_list[i])
   # names(data_w)
 
@@ -293,8 +294,8 @@ library(lavaan)
 # girl.merged <- merged %>% filter(Gender == "Girl")
 model = '
 
-  I =~ 1*mean_selfes_w1 + 1*mean_selfes_w3 + 1*mean_selfes_w5 + 1*mean_selfes_w6 + 1*mean_selfes_w7
-  S =~ 0*mean_selfes_w1 + 2*mean_selfes_w3 + 4*mean_selfes_w5 + 5*mean_selfes_w6 + 6*mean_selfes_w7
+  I =~ 1*w1 + 1*w3 + 1*w5 + 1*w6 + 1*w7
+  S =~ 0*w1 + 2*w3 + 4*w5 + 5*w6 + 6*w7
 
   #I ~ Gender
   #S ~ Gender

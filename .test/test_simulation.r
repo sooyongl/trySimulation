@@ -1,5 +1,6 @@
-# devtools::install_github("https://github.com/sooyongl/trySimulation")
-library(trySimulation);
+devtools::install_github("https://github.com/sooyongl/trySimulation")
+library(trySimulation); library(tidyverse); library(MASS)
+library(lavaan); library(glue)
 
 # for(source.function in list.files("R") { source(source.function)})
 
@@ -9,7 +10,7 @@ condition_list <-
       cov_size = c(0, 0.5),
       n_indi = c(3, 6),
       cut_size = c(3,5,7),
-      n_rep = 100,
+      n_rep = 50,
       full = T)
 
 sim_result <- runSimulation(condition_list)
