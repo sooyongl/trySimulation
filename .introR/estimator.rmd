@@ -1,0 +1,244 @@
+---
+title: "estimator with MLE"
+author: "Sooyong Lee"
+date: "5/19/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## model
+
+### LGM formula
+
+$$\begin{align*}
+y = \eta_0 + \eta_1t + e\\
+\eta_0 = \alpha_{00} + \tau_0\\
+\eta_1 = \alpha_{11} + \tau_1
+\end{align*}$$
+
+$$e \text{ ~ } MVN(0, \theta) , \text{ where } \begin{bmatrix} 
+\sigma_{11}  & . & . \\ 
+\sigma_{21}  & \sigma_{22} & . \\ 
+\sigma_{31}  & \sigma_{32} & \sigma_{33} \\
+\end{bmatrix}$$
+
+
+$$\tau \text{ ~ } MVN(0, \phi), \text{ where } \begin{bmatrix} 
+\phi_{00}  & * \\ 
+\phi_{10} & \phi_{11} \\ 
+\end{bmatrix}$$
+
+### model-implied covariance and means
+
+$$y = \begin{bmatrix} 
+1 & 0\\ 
+1 & 1\\
+1 & 2\\
+\end{bmatrix}*\begin{bmatrix} 
+\eta_0\\
+\eta_1\\ 
+\end{bmatrix} + \begin{bmatrix} 
+e_0\\
+e_1\\
+e_0\\
+\end{bmatrix}$$
+
+- model-implied covariance matrix
+
+$$\Sigma = \Lambda\Phi\Lambda' + E$$
+
+
+$$\Sigma = \begin{bmatrix} 
+1 & 0\\ 
+1 & 1\\
+1 & 2\\
+\end{bmatrix}
+*
+\begin{bmatrix} 
+\phi_{00}  & \phi_{01} \\ 
+\phi_{10} & \phi_{11} \\ 
+\end{bmatrix}*\begin{bmatrix} 
+1 & 0\\ 
+1 & 1\\
+1 & 2\\
+\end{bmatrix}' + \begin{bmatrix} 
+\sigma_{11}  & \sigma_{12} & \sigma_{13} \\ 
+\sigma_{21}  & \sigma_{22} & \sigma_{23} \\ 
+\sigma_{31}  & \sigma_{32} & \sigma_{33} \\
+\end{bmatrix}$$
+
+- model-implied mean vector
+
+$$\mu_y = \Lambda\eta$$
+
+$$\mu_y = \begin{bmatrix} 
+1 & 0\\ 
+1 & 1\\
+1 & 2\\
+\end{bmatrix}*\begin{bmatrix} 
+\eta_0\\
+\eta_1\\ 
+\end{bmatrix}$$
+
+### parameters to be estimated
+
+$\phi$s,$\sigma$s, $\eta$s
+
+## MLE
+
+Y is assumed to follow the multivariate normal distribution $Y ~ MVN(\mu, \Sigma)$. $\mu$ and $\Sigma$ are constructed by the parameters ($\phi$s,$\sigma$s, $\eta$s). We want to look for the parameter estimates that make the model-implied $\Sigma$ and $\mu$ close to the sample $\Sigma$ and $\mu$. There are many ways, such as OLS, WLS, or MLE.
+
+$$pdf = f(y) = (2\pi)^{\frac{k}{2}}|\Sigma|^{-\frac{1}{2}}e^{(-\frac{1}{2}(y-\mu)'\Sigma^{-1}(y-\mu)}$$
+
+We can calculate the pdf for each individual. And then, summing up all the pdf (or multiplying), which is defined as the likelihood function. (Normally, we use the natural log to make sure an easy computation(?))
+
+$$L = \prod{f(y)}$$
+$$logL=\Sigma{f(x)}$$
+
+$$L = - (nk/2)*log(2\pi) - (n/2)*ln(|\Sigma|) - \frac{1}{2}\sum_{i}^{n} [(y_i-\mu)' \Sigma^{-1}  (y_i-\mu)]$$
+
+When we find the parameter values that maximize "logL", we call it maximum likelihood estimates. Why? We assume those parameter estimates produce the model-implied distribution closest to the sample distribution.
+
+
+## How to get MLE?
+
+보통은 L 을 1차 미분해서 구하면 됨. 근데 미지수가 많아서 손으로 못함. 그리고 closed form 이 아닌 경우가 많음. 그래서 값을 하나씩 반복해서 넣어가면서 L 값이 가장 작아지는 parameter 값을 찾음. 
+
+- Newton-Raphson
+
+iterative process. 초기 값을 넣고 그 초기 값을 업데이트를 하면서 최대값을 찾아 감. 값을 업데이트하기 위해서 Hessian matrix 를 계산함 (fisher information; parameter estimates 들의 covariance matrix 를 계산함 - 이게 즉 SE가 됨; Hessian matrix 는 L  의 2차 미분값). 
+
+근데 이미 다 만들어 놓음. `optim()` or `nlminb()` 같은 함수가 Newton-Raphson 을 해주는 함수. 직접 Newton-Raphson을 만들 수도 있지만, R로 코드를 만들 경우 아주 느림 (반복해야 해서). `optim()` 같은 함수는 c++ 로 만들어져서 훨신 빠름. 굳이 처음부터 만들 필요는 없음.
+
+처음 대입할 값을 잘 지정해야 함. 이상한 값을 넣으면 수렴이 안되는 경우가 자주 생김.
+
+
+## procedure 정리
+
+LGM 추정치를 만든다고 했을 때, 우리의 모델을 기반으로 model-implied cov and mu 를 만들고. 이 cov 와 mu를 활용해서 실제 값을 넣은 pdf 를 개인마다 구함. 이 때, cov 와 mu는 parameter 추정치에 가상의 값을 넣어서 계산을 시작함. 그리고 그걸 log 취해서 합친 likelihood 를 가장 크게 하는 parameter를 구하면 됨. 
+
+근데 `optim()` 같은 최적화 함수는 기본적으로 최소값을 찾는걸 기본으로 함. 그래서 pdf 합계 값에 - 를 취해줌. 아래 코드에 ` return(-logl)` 마지막에 logL에 - 를 붙여서 최소값이 최대값을 뜻하도록 바꿔주었음.
+
+```{r}
+ll_multN <- function(theta,X) {
+
+  # theta = starting_pars
+  # X = X #is an nxk dataset
+
+  # MLE: L = - (nk/2)*log(2*pi) - (n/2)*log(det(Sigma)) - (1/2)*sum_i(t(X_i-mu) %*% Sigma^-1 %*% (X_i-mu))
+  # summation over i is performed using a apply call for efficiency
+
+  n <- nrow(X)
+  k <- ncol(X)
+
+  # construct model-implied covariance and mean vector
+  lmeans <- grepl("lmean", names(theta))
+  latent_mean <- theta[lmeans]
+
+  lambda <- matrix(
+    c(1, 1, 1,
+      0, 1, 2), ncol = 2)
+
+  phi <- grepl("phi", names(theta))
+  phi <- theta[phi]
+  phi <-
+    matrix(
+      c(phi[1], phi[2],
+        phi[2], phi[3]), ncol = 2)
+
+  errors <- grepl("error", names(theta))
+  errors <- theta[errors]
+  errors <- diag(errors, k)
+
+  Sigma <- lambda %*% phi %*% t(lambda) + errors
+  mu.vec <- latent_mean %*% t(lambda)
+
+  # compute summation
+  sum_i <- sum(apply(X, 1, function(x) (matrix(x,1,k)-mu.vec)%*%solve(Sigma)%*%t(matrix(x,1,k)-mu.vec)))
+
+  # compute log likelihood
+  logl <- -.5*n*k*log(2*pi) - .5*n*log(det(Sigma))
+  logl <- logl - .5*sum_i
+  
+  # to make the maximum the minimun
+  return(-logl)
+}
+```
+
+
+```{r}
+n <- 300 # number of data points
+k <- 3 # number of variables
+
+lambda <-
+  matrix(
+    c(1, 1, 1,
+      0, 1, 2), ncol = 2)
+phi <-
+  matrix(
+    c(1, 0.2,
+      0.2, 0.1), ncol = 2)
+errors <- diag(0.5, 3)
+Sigma.tru <- lambda %*% phi %*% t(lambda) + errors
+
+latent_mean <- c(3, 0.5)
+mu.tru <- lambda %*% latent_mean
+
+# Generate simulated dataset
+X <- MASS::mvrnorm(n, mu = mu.tru, Sigma = Sigma.tru, empirical = T)
+colMeans(X)
+cov(X)
+```
+
+
+```{r}
+starting_pars <-
+  c(lmean_inp = c(0, 0),
+    phi_inp = c(1, 0, .1),
+    error_inp = 0.5
+  )
+optim.out <-
+  optim(par = starting_pars,
+        fn = ll_multN,
+        X = X,
+        hessian = T,
+        method = "L-BFGS-B",
+        lower = -Inf,
+        upper = Inf)
+
+optim.out 
+
+```
+
+## SE of parameter estimates
+
+추정은 optim 으로 하고, 이 추정치들을 검증해야 함. 그러기 위해서 SE를 구해야 함. SE는 위에서 말한대로 Hessian matrix 를 구하면 됨. 이것도 역시 optim 에서 구해달라고 할 수 있음. 여기서는 직접 Hessian matrix 를 구하지 않고 그냥 optim 에서 주는 값을 활용해서 사용함.
+
+SE는 fisher information 의 대각행렬에 루트를 씌우면 됨 (Mplus 에서는 아마 tech2 인가 tech3 을 넣으면 모든 param에 대해서 주어짐. tech4 인가?). fisher information 은 Hessian matrix 의 역핼렬임. Hessian matrix 가 2차 미분 값이고, precision 을 알려준다고 생각하면 됨. 이 SE를 가지고 z나 t 테스트 하면 됨. 혹은 신뢰구간 계산하든가.
+
+```{r}
+# Standard Errors
+(fisher_info <- solve(optim.out$hessian))
+(prop_sigma <- sqrt(diag(fisher_info)))
+(upper <- optim.out$par+1.96*prop_sigma)
+(lower <- optim.out$par-1.96*prop_sigma)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

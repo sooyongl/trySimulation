@@ -6,7 +6,7 @@ ll_multN <- function(theta,X) {
   # theta = starting_pars
   # X = X #is an nxk dataset
 
-  # MLE: L = - (nk/2)*log(2*pi) - (n/2)*log(det(Sigma)) - (1/2)*sum_i(t(X_i-mu)^2 %*% Sigma^-1 %*% (X_i-mu)^2)
+  # MLE: L = - (nk/2)*log(2*pi) - (n/2)*log(det(Sigma)) - (1/2)*sum_i(t(X_i-mu) %*% Sigma^-1 %*% (X_i-mu))
   # summation over i is performed using a apply call for efficiency
 
   n <- nrow(X)
@@ -40,6 +40,8 @@ ll_multN <- function(theta,X) {
   # compute log likelihood
   logl <- -.5*n*k*log(2*pi) - .5*n*log(det(Sigma))
   logl <- logl - .5*sum_i
+
+  # to make the maximum the minimun
   return(-logl)
 }
 
@@ -76,6 +78,7 @@ optim.out <-
         X = X,
         hessian = T,
         method = "L-BFGS-B",
+        # control=list(fnscale=-1),
         lower = -Inf,
         upper = Inf)
 
